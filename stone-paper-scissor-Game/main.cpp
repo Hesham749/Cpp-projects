@@ -68,7 +68,7 @@ int ReadPlayerChoice()
 
 void FillPlayerChoice(int Number, strPlayerInfo &Player)
 {
-        Player.PlayerChoice = (enGameChoice)Number;
+    Player.PlayerChoice = (enGameChoice)Number;
 }
 
 void AddRoundResult(strGameDashboard &Dashboard)
