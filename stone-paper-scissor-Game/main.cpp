@@ -68,20 +68,7 @@ int ReadPlayerChoice()
 
 void FillPlayerChoice(int Number, strPlayerInfo &Player)
 {
-    switch (Number)
-    {
-    case enGameChoice::Paper:
-        Player.PlayerChoice = Paper;
-        break;
-    case enGameChoice::Scissor:
-        Player.PlayerChoice = Scissor;
-        break;
-    case enGameChoice::Stone:
-        Player.PlayerChoice = Stone;
-        break;
-    default:
-        break;
-    }
+        Player.PlayerChoice = (enGameChoice)Number;
 }
 
 void AddRoundResult(strGameDashboard &Dashboard)
