@@ -180,11 +180,15 @@ void PrintGameDashboard(strGameDashboard Dashboard)
     PrintGameResult(Dashboard);
 }
 
-void PrintRoundResult(strGameDashboard Dashboard)
+void PrintRoundResult(strGameDashboard Dashboard, int RoundNumber)
 {
+    cout << "\n\n_________________Round [" << RoundNumber << "]" << "_________________\n"
+         << endl;
     cout << Dashboard.Player1.Name << " Choice : " << PrintPlayerChoice(Dashboard.Player1) << endl;
     cout << Dashboard.Player2.Name << " Choice : " << PrintPlayerChoice(Dashboard.Player2) << endl;
     cout << "Round Winner\t: " << "[ " << PrintRoundWinner(Dashboard) << " ]" << endl;
+    cout << "___________________________________________\n"
+         << endl;
 }
 
 bool PlayAgain()
@@ -204,15 +208,11 @@ void StartGame()
     Dashboard.TotalRounds = ReadPositiveNumber("How many rounds you want to Play : 1 to 10 ? ");
     for (int i = 1; i <= Dashboard.TotalRounds; i++)
     {
-        cout << "\nRound [1] begins : " << endl;
+        cout << "\nRound [" << i << "] begins : " << endl;
         FillPlayerChoice(ReadPlayerChoice(), Dashboard.Player1);
         FillPlayerChoice(RandomNumber(1, 3), Dashboard.Player2);
         AddRoundResult(Dashboard);
-        cout << "\n\n_________________Round [" << i << "]" << "_________________\n"
-             << endl;
-        PrintRoundResult(Dashboard);
-        cout << "___________________________________________\n"
-             << endl;
+        PrintRoundResult(Dashboard, i);
     }
     PrintGameDashboard(Dashboard);
     if (PlayAgain())
