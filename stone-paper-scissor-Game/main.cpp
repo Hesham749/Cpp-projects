@@ -80,40 +80,40 @@ void AddRoundResult(strGameDashboard &Dashboard)
         Dashboard.Draw += 1;
         Dashboard.RoundResult = enRoundResult::Draw;
     }
-    else if (Player1Choice == enGameChoice::Paper && Player2Choice == enGameChoice::Stone)
+    switch (Player1Choice)
     {
-        Dashboard.Player1.Wins += 1;
-        Dashboard.RoundResult = enRoundResult::Player1Win;
-    }
-    else if (Player1Choice == enGameChoice::Stone && Player2Choice == enGameChoice::Scissor)
-    {
-        Dashboard.Player1.Wins += 1;
-        Dashboard.RoundResult = enRoundResult::Player1Win;
-    }
-    else if (Player1Choice == enGameChoice::Scissor && Player2Choice == enGameChoice::Paper)
-    {
-        Dashboard.Player1.Wins += 1;
-        Dashboard.RoundResult = enRoundResult::Player1Win;
-    }
-    else
-    {
+    case enGameChoice::Paper:
+        if (Player2Choice == enGameChoice::Stone)
+        {
+            Dashboard.Player1.Wins += 1;
+            Dashboard.RoundResult = enRoundResult::Player1Win;
+        }
+        break;
+    case enGameChoice::Stone:
+        if (Player2Choice == enGameChoice::Scissor)
+        {
+            Dashboard.Player1.Wins += 1;
+            Dashboard.RoundResult = enRoundResult::Player1Win;
+        }
+        break;
+    case enGameChoice::Scissor:
+        if (Player2Choice == enGameChoice::Paper)
+        {
+            Dashboard.Player1.Wins += 1;
+            Dashboard.RoundResult = enRoundResult::Player1Win;
+        }
+        break;
+    default:
         Dashboard.Player2.Wins += 1;
         Dashboard.RoundResult = enRoundResult::Player2Win;
+        break;
     }
 }
 
 string PrintPlayerChoice(strPlayerInfo Player)
 {
-    switch (Player.PlayerChoice)
-    {
-    case enGameChoice::Paper:
-        return "Paper";
-    case enGameChoice::Stone:
-        return "Stone";
-    case enGameChoice::Scissor:
-        return "Scissor";
-    }
-    return "";
+    string choice[3] = {"Stone", "Paper", "Scissor"};
+    return choice[Player.PlayerChoice - 1];
 }
 
 string PrintRoundWinner(strGameDashboard Dashboard)
@@ -132,12 +132,23 @@ string PrintRoundWinner(strGameDashboard Dashboard)
         return "No Winner";
     }
 }
+string Tabs(short NumberOfTabs)
+{
+    string tab = "";
+    for (int i = 0; i < NumberOfTabs; i++)
+    {
+        tab += "\t";
+    }
+    return tab;
+}
 
 void GameResultHeader(string Title)
 {
-    cout << "\n\n\t\t______________________________________________________\n\n";
-    cout << "\t\t\t\t   *** " << Title << " ***";
-    cout << "\n\t\t______________________________________________________\n";
+    cout << "\n\n"
+         << Tabs(2) << "______________________________________________________\n\n";
+    cout << Tabs(4) << "   *** " << Title << " ***";
+    cout << "\n"
+         << Tabs(2) << "______________________________________________________\n";
 }
 
 string PrintFinalWinner(strGameDashboard Dashboard)
@@ -152,13 +163,14 @@ string PrintFinalWinner(strGameDashboard Dashboard)
 
 void PrintGameResult(strGameDashboard Dashboard)
 {
-    cout << "\n\t\t___________________[ Game Results ]___________________\t\t\n\n";
-    cout << "\t\t" << "Game Rounds\t\t: " << Dashboard.TotalRounds << endl;
-    cout << "\t\t" << Dashboard.Player1.Name << " won times\t: " << Dashboard.Player1.Wins << endl;
-    cout << "\t\t" << Dashboard.Player2.Name << " won times\t: " << Dashboard.Player2.Wins << endl;
-    cout << "\t\t" << "Draw times\t\t: " << Dashboard.Draw << endl;
-    cout << "\t\t" << "Final Winner\t\t: " << PrintFinalWinner(Dashboard) << endl;
-    cout << "\t\t" << "______________________________________________________" << endl;
+    cout << "\n"
+         << Tabs(2) << "___________________[ Game Results ]___________________" << Tabs(2) << "\n\n";
+    cout << Tabs(2) << "Game Rounds" << Tabs(2) << ": " << Dashboard.TotalRounds << endl;
+    cout << Tabs(2) << Dashboard.Player1.Name << " won times" << Tabs(1) << ": " << Dashboard.Player1.Wins << endl;
+    cout << Tabs(2) << Dashboard.Player2.Name << " won times" << Tabs(1) << ": " << Dashboard.Player2.Wins << endl;
+    cout << Tabs(2) << "Draw times" << Tabs(2) << ": " << Dashboard.Draw << endl;
+    cout << Tabs(2) << "Final Winner" << Tabs(2) << ": " << PrintFinalWinner(Dashboard) << endl;
+    cout << Tabs(2) << "______________________________________________________" << endl;
 }
 
 void PrintGameDashboard(strGameDashboard Dashboard)
@@ -178,6 +190,12 @@ void PrintRoundResult(strGameDashboard Dashboard, int RoundNumber)
          << endl;
 }
 
+void ResetScreen()
+{
+    system("cls");
+    system("color 0F");
+}
+
 bool PlayAgain()
 {
     string Answer = "";
@@ -189,6 +207,7 @@ bool PlayAgain()
 
 void StartGame()
 {
+    ResetScreen();
     strGameDashboard Dashboard;
     Dashboard.Player1.Name = ReadPlayerName("Please enter Your Name ? ");
     Dashboard.Player2.Name = "Computer";
