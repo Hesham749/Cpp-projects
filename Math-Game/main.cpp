@@ -151,9 +151,9 @@ string Tabs(short NumberOfTabs)
     return tab;
 }
 
-bool IsPass(short RightAnswers, short TotalQuestions)
+bool IsPass(short RightAnswers, short WrongAnswers)
 {
-    return (RightAnswers / TotalQuestions > TotalQuestions / 2);
+    return (RightAnswers > WrongAnswers);
 }
 
 void GameResultHeader(bool IsPass)
@@ -195,7 +195,7 @@ void PrintGameResult(strGameDashboard Dashboard)
 
 void PrintGameDashboard(strGameDashboard Dashboard)
 {
-    GameResultHeader(IsPass(Dashboard.RightAnswers, Dashboard.TotalQuestions));
+    GameResultHeader(IsPass(Dashboard.RightAnswers, Dashboard.WrongAnswers));
     PrintGameResult(Dashboard);
 }
 
