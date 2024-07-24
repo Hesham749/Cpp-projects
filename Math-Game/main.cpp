@@ -177,7 +177,7 @@ string PrintGameLevel(enGameLevel GameLevel)
 }
 string PrintOperationType(enOperationType OpType)
 {
-    string Levels[5] = {"Add", "Sub", "Mul", "Div", "Mix"};
+    string Levels[5] = {"+", "-", "*", "/", "Mix"};
     return Levels[OpType - 1];
 }
 
