@@ -40,7 +40,6 @@ short ReadPositiveNumber(string message)
         cout << message;
         cin >> Number;
     } while (10 < Number || Number <= 0);
-
     return Number;
 }
 
@@ -69,21 +68,23 @@ void PrintQuestion(short Num1, short Num2, char operation)
 
 float GetQuestion(enGameLevel Level, enOperationType OpType)
 {
-    short Num1 = 0, Num2 = 0;
+    short Num1 = 0, Num2 = 0, From = 0, To = 0;
     if (Level == enGameLevel::Mix)
         Level = (enGameLevel)RandomNumber(1, 3);
     switch (Level)
     {
     case enGameLevel::Easy:
-        Num1 = RandomNumber(1, 10), Num2 = RandomNumber(1, 10);
+        From = 1, To = 10;
         break;
     case enGameLevel::Med:
-        Num1 = RandomNumber(5, 15), Num2 = RandomNumber(5, 15);
+        From = 5, To = 15;
         break;
     case enGameLevel::Hard:
-        Num1 = RandomNumber(15, 100), Num2 = RandomNumber(15, 100);
+        From = 15, To = 100;
         break;
     }
+
+    Num1 = RandomNumber(From, To), Num2 = RandomNumber(From, To);
 
     if (OpType == enOperationType::mix)
         OpType = (enOperationType)RandomNumber(1, 4);
@@ -115,7 +116,6 @@ void FillResult(strGameDashboard &Dashboard)
 {
     if (Dashboard.QuestionInfo.PlayerAnswer == Dashboard.QuestionInfo.RightAnswer)
         Dashboard.RightAnswers++, Dashboard.QuestionInfo.Result = true;
-
     else
         Dashboard.WrongAnswers++, Dashboard.QuestionInfo.Result = false;
 }
@@ -226,7 +226,6 @@ void StartGame()
     ResetScreen();
     strGameDashboard Dashboard;
     FillGameRules(Dashboard);
-
     for (int i = 1; i <= Dashboard.TotalQuestions; i++)
     {
         cout << "\nQuestion [" << i << "/" << Dashboard.TotalQuestions << "]" << endl;
