@@ -166,7 +166,7 @@ void PrintGameResult(strGameDashboard Dashboard)
     cout << "\n"
          << Tabs(2) << "___________________[ Game Results ]___________________" << Tabs(2) << "\n\n";
     cout << Tabs(2) << "Game Rounds" << Tabs(2) << ": " << Dashboard.TotalRounds << endl;
-    cout << Tabs(2) << Dashboard.Player1.Name << " won times" << Tabs(1) << ": " << Dashboard.Player1.Wins << endl;
+    cout << Tabs(2) << Dashboard.Player1.Name << " won times" << Tabs(2) << ": " << Dashboard.Player1.Wins << endl;
     cout << Tabs(2) << Dashboard.Player2.Name << " won times" << Tabs(1) << ": " << Dashboard.Player2.Wins << endl;
     cout << Tabs(2) << "Draw times" << Tabs(2) << ": " << Dashboard.Draw << endl;
     cout << Tabs(2) << "Final Winner" << Tabs(2) << ": " << PrintFinalWinner(Dashboard) << endl;
