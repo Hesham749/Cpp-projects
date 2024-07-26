@@ -39,7 +39,7 @@ short ReadPositiveNumber(string message)
     {
         cout << message;
         cin >> Number;
-    } while (10 < Number || Number <= 0);
+    } while (SHRT_MAX < Number || Number <= 0);
     return Number;
 }
 
