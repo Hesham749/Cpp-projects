@@ -39,7 +39,7 @@ short ReadPositiveNumber(string message)
     {
         cout << message;
         cin >> Number;
-    } while (SHRT_MAX < Number || Number <= 0);
+    } while (100 < Number || Number <= 0);
     return Number;
 }
 
@@ -77,10 +77,10 @@ float GetQuestion(enGameLevel Level, enOperationType OpType)
         From = 1, To = 10;
         break;
     case enGameLevel::Med:
-        From = 5, To = 15;
+        From = 10, To = 50;
         break;
     case enGameLevel::Hard:
-        From = 15, To = 100;
+        From = 50, To = 100;
         break;
     }
 
