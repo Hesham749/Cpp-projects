@@ -3,8 +3,8 @@
   "WorkspaceRootPath": "D:\\Courses\\C\u002B\u002B Learning\\projects\\Math-Game\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|D:\\Courses\\C\u002B\u002B Learning\\projects\\Math-Game\\main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
-      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:main.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
+      "AbsoluteMoniker": "D:0:0:{2369DA2C-9DB7-49CC-AB63-4CB17D365E62}|Math-Game.vcxproj|D:\\Courses\\C\u002B\u002B Learning\\projects\\Math-Game\\Math-Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}",
+      "RelativeMoniker": "D:0:0:{2369DA2C-9DB7-49CC-AB63-4CB17D365E62}|Math-Game.vcxproj|solutionrelative:Math-Game.cpp||{D0E1A5C6-B359-4E41-9B60-3365922C2A22}"
     }
   ],
   "DocumentGroupContainers": [
@@ -19,14 +19,14 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "main.cpp",
-              "DocumentMoniker": "D:\\Courses\\C\u002B\u002B Learning\\projects\\Math-Game\\main.cpp",
-              "RelativeDocumentMoniker": "main.cpp",
-              "ToolTip": "D:\\Courses\\C\u002B\u002B Learning\\projects\\Math-Game\\main.cpp",
-              "RelativeToolTip": "main.cpp",
-              "ViewState": "AQIAAM8AAAAAaGZmZmYxwNQAAAAPAAAA",
+              "Title": "Math-Game.cpp",
+              "DocumentMoniker": "D:\\Courses\\C\u002B\u002B Learning\\projects\\Math-Game\\Math-Game.cpp",
+              "RelativeDocumentMoniker": "Math-Game.cpp",
+              "ToolTip": "D:\\Courses\\C\u002B\u002B Learning\\projects\\Math-Game\\Math-Game.cpp",
+              "RelativeToolTip": "Math-Game.cpp",
+              "ViewState": "AQIAAFgAAAAAAAAAAAAWwGEAAAAVAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
-              "WhenOpened": "2024-07-26T12:16:34.981Z",
+              "WhenOpened": "2024-07-26T13:26:53.844Z",
               "EditorCaption": ""
             }
           ]
