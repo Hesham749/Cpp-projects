@@ -14,8 +14,12 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
@@ -24,7 +28,7 @@
               "RelativeDocumentMoniker": "Math-Game.cpp",
               "ToolTip": "D:\\Courses\\C\u002B\u002B Learning\\projects\\Math-Game\\Math-Game.cpp",
               "RelativeToolTip": "Math-Game.cpp",
-              "ViewState": "AQIAAFgAAAAAAAAAAAAWwGUAAAAbAAAA",
+              "ViewState": "AQIAALcAAADgZWZmZoYywPAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000677|",
               "WhenOpened": "2024-07-26T13:26:53.844Z",
               "EditorCaption": ""
