@@ -205,6 +205,12 @@ void ShowMainMenu()
 
 }
 
+void GoBackToMenu(string message)
+{
+	cout << message;
+	system("pause>0");
+}
+
 //list
 
 void PrintClientData(strClientData Client)
@@ -501,9 +507,8 @@ void TransactionsMenu(vector <strClientData>& vClient, string FileName)
 			PrintBalancesList(vClient);
 			break;
 		}
-		cout << "\n\nPress any key to go back to Transactions Menu.....";
-		system("pause>0");
-	} while (true);
+		GoBackToMenu("\n\nPress any key to go back to Transactions Menu.....");
+	} while (UserChoice != MainMenu);
 }
 
 void StartProgram(string FileName)
@@ -541,8 +546,8 @@ void StartProgram(string FileName)
 			TransactionsMenu(vClients, FileName);
 			break;
 		}
-		cout << "\n\nPress any key to go back to main Menu.....";
-		system("pause>0");
+		if (UserChoice != TransActions)
+			GoBackToMenu("\n\nPress any key to go back to main Menu.....");
 	} while (UserChoice != enMainMenuOptions::Exit);
 }
 
