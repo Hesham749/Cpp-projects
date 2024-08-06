@@ -35,11 +35,15 @@ struct strGameDashboard
 short ReadPositiveNumber(string message)
 {
 	short Number = 0;
-	do
+	cout << message;
+	cin >> Number;
+	while (cin.fail() || (100 < Number || Number <= 0))
 	{
-		cout << message;
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cout << "invalid Number please enter valid Number ? ";
 		cin >> Number;
-	} while (100 < Number || Number <= 0);
+	}
 	return Number;
 }
 
@@ -51,19 +55,23 @@ int RandomNumber(int from, int to)
 short ReadPlayerChoice(string Message, short NumberOfChoices)
 {
 	short Number = 0;
-	do
+	cout << Message;
+	cin >> Number;
+	while (cin.fail() || (Number <= 0 || Number > NumberOfChoices))
 	{
-		cout << Message;
+		cin.clear();
+		cin.ignore(numeric_limits<streamsize>::max(), '\n');
+		cout << "invalid Number please enter valid Number ? ";
 		cin >> Number;
-	} while (Number <= 0 || Number > NumberOfChoices);
+	}
 	return Number;
 }
 
 void PrintQuestion(short Num1, short Num2, char operation)
 {
 	cout << "\n"
-		<< Num1 << "\n"
-		<< Num2 << " " << operation << "\n____________" << endl;
+		 << Num1 << "\n"
+		 << Num2 << " " << operation << "\n____________" << endl;
 }
 
 float GetQuestion(enGameLevel Level, enOperationType OpType)
@@ -112,7 +120,7 @@ float ReadPlayerAnswer()
 	return Answer;
 }
 
-void FillResult(strGameDashboard& Dashboard)
+void FillResult(strGameDashboard &Dashboard)
 {
 	if (Dashboard.QuestionInfo.PlayerAnswer == Dashboard.QuestionInfo.RightAnswer)
 		Dashboard.RightAnswers++, Dashboard.QuestionInfo.Result = true;
@@ -133,7 +141,7 @@ void PrintResult(bool Result, float RightAnswer)
 	ScreenColor(Result);
 	if (Result)
 		cout << "Right Answer :-)\n"
-		<< endl;
+			 << endl;
 	else
 	{
 		cout << "Wrong answer :-(" << endl;
@@ -164,27 +172,27 @@ void GameResultHeader(bool IsPass)
 	else
 		Grade = "Fail :-(";
 	cout << "\n\n"
-		<< Tabs(2) << "______________________________________________________\n\n";
+		 << Tabs(2) << "______________________________________________________\n\n";
 	cout << Tabs(3) << "   *** Final Result is " << Grade << " ***";
 	cout << "\n"
-		<< Tabs(2) << "______________________________________________________\n";
+		 << Tabs(2) << "______________________________________________________\n";
 }
 
 string PrintGameLevel(enGameLevel GameLevel)
 {
-	string Levels[4] = { "Easy", "Med", "Hard", "Mix" };
+	string Levels[4] = {"Easy", "Med", "Hard", "Mix"};
 	return Levels[GameLevel - 1];
 }
 string PrintOperationType(enOperationType OpType)
 {
-	string Levels[5] = { "+", "-", "*", "/", "Mix" };
+	string Levels[5] = {"+", "-", "*", "/", "Mix"};
 	return Levels[OpType - 1];
 }
 
 void PrintGameResult(strGameDashboard Dashboard)
 {
 	cout << "\n"
-		<< Tabs(2) << "___________________[ Game Results ]___________________" << Tabs(2) << "\n\n";
+		 << Tabs(2) << "___________________[ Game Results ]___________________" << Tabs(2) << "\n\n";
 	cout << Tabs(2) << "Number Of Questions" << Tabs(1) << ": " << Dashboard.TotalQuestions << endl;
 	cout << Tabs(2) << "Questions Level" << Tabs(2) << ": " << PrintGameLevel(Dashboard.Level) << endl;
 	cout << Tabs(2) << "OpType" << Tabs(3) << ": " << PrintOperationType(Dashboard.OpType) << endl;
@@ -214,7 +222,7 @@ void ResetScreen()
 	system("color 0F");
 }
 
-void FillGameRules(strGameDashboard& Dashboard)
+void FillGameRules(strGameDashboard &Dashboard)
 {
 	Dashboard.TotalQuestions = ReadPositiveNumber("How many questions do you want to answer ? ");
 	Dashboard.Level = (enGameLevel)ReadPlayerChoice("Enter questions level [1]Easy , [2]Mid , [3]Hard , [4]Mix ? ", 4);

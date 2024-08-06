@@ -58,11 +58,15 @@ int RandomNumber(int from, int to)
 int ReadPlayerChoice()
 {
     int Number = 0;
-    do
+    cout << "Your Choice : [1]Stone , [2]Paper , [3]Scissor ? ";
+    cin >> Number;
+    while (cin.fail() || (Number > 3 || Number < 1))
     {
-        cout << "Your Choice : [1]Stone , [2]Paper , [3]Scissor ? ";
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "invalid Number please enter valid Number ? ";
         cin >> Number;
-    } while (Number <= 0 || Number > 3);
+    }
     return Number;
 }
 
