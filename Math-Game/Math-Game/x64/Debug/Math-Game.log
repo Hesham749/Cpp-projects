@@ -1,7 +1,7 @@
 ﻿  Math-Game.cpp
-D:\Courses\C++ Learning\projects\Math-Game\Math-Game.cpp(95,15): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-D:\Courses\C++ Learning\projects\Math-Game\Math-Game.cpp(98,15): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-D:\Courses\C++ Learning\projects\Math-Game\Math-Game.cpp(101,15): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-D:\Courses\C++ Learning\projects\Math-Game\Math-Game.cpp(104,15): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
-D:\Courses\C++ Learning\projects\Math-Game\Math-Game.cpp(106,1): warning C4715: 'GetQuestion': not all control paths return a value
+D:\Courses\C++ Learning\projects\Math-Game\Math-Game.cpp(103,15): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+D:\Courses\C++ Learning\projects\Math-Game\Math-Game.cpp(106,15): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+D:\Courses\C++ Learning\projects\Math-Game\Math-Game.cpp(109,15): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+D:\Courses\C++ Learning\projects\Math-Game\Math-Game.cpp(112,15): warning C4244: 'return': conversion from 'int' to 'float', possible loss of data
+D:\Courses\C++ Learning\projects\Math-Game\Math-Game.cpp(114,1): warning C4715: 'GetQuestion': not all control paths return a value
   Math-Game.vcxproj -> D:\Courses\C++ Learning\projects\Math-Game\x64\Debug\Math-Game.exe
