@@ -7,7 +7,7 @@ using namespace std;
 
 const string fileNmae = "clients.txt";
 
-enum enOptions
+enum MainMenuOptions
 {
 	ShowList = 1, Add, Delete, Update, Find, Exit
 };
@@ -172,11 +172,6 @@ void UpdateFileData(vector <strClientData>& vClients, string FileName)
 	}
 }
 
-enOptions ReadUserChoice(short NumberOfChoices)
-{
-	return (enOptions)ReadNumberInRange(1, NumberOfChoices, "Choose what do you want to do ? [1 to 6 ] : ");
-}
-
 void ScreenHeader(string Title)
 {
 	cout << "--------------------------------------------\n";
@@ -184,7 +179,7 @@ void ScreenHeader(string Title)
 	cout << "--------------------------------------------\n";
 }
 
-void MainMenu()
+void ShowMainMenu()
 {
 	system("cls");
 	cout << "======================================================\n";
@@ -372,13 +367,13 @@ void FindClientResult(vector <strClientData>& vClients)
 void StartProgram(string FileName)
 {
 	vector <strClientData> vClients = DataFromFile(FileName);
-	enOptions UserChoice = enOptions::Exit;
+	MainMenuOptions UserChoice = MainMenuOptions::Exit;
 	do
 	{
-		MainMenu();
-		UserChoice = ReadUserChoice(6);
+		ShowMainMenu();
+		UserChoice = (MainMenuOptions)ReadNumberInRange(1, 6, "Choose what do you want to do ? [1 to 6 ] : ");
 		system("cls");
-		if (UserChoice == enOptions::Exit)
+		if (UserChoice == MainMenuOptions::Exit)
 		{
 			ScreenHeader("Program Ends :-)");
 			break;
@@ -403,7 +398,7 @@ void StartProgram(string FileName)
 		}
 		cout << "\n\nPress any key to go back to main menu.....";
 		system("pause>0");
-	} while (UserChoice != enOptions::Exit);
+	} while (UserChoice != MainMenuOptions::Exit);
 }
 
 int main()
