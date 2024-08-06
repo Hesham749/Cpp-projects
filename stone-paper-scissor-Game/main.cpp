@@ -37,16 +37,18 @@ string ReadPlayerName(string Message)
     cin >> Name;
     return Name;
 }
-
-int ReadPositiveNumber(string message)
+short ReadPositiveNumber(string message)
 {
-    int Number = 0;
-    do
+    short Number = 0;
+    cout << message;
+    cin >> Number;
+    while (cin.fail() || (Number > 10 || Number <= 0))
     {
-        cout << message << endl;
+        cin.clear();
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        cout << "invalid Number please enter valid Number ? ";
         cin >> Number;
-    } while (10 < Number || Number <= 0);
-
+    }
     return Number;
 }
 
