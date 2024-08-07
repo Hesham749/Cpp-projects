@@ -79,33 +79,35 @@ void AddRoundResult(strGameDashboard& Dashboard)
 		Dashboard.Draw += 1;
 		Dashboard.RoundResult = enRoundResult::Draw;
 	}
-	switch (Player1Choice)
-	{
-	case enGameChoice::Paper:
-		if (Player2Choice == enGameChoice::Stone)
+	else {
+		switch (Player1Choice)
 		{
-			Dashboard.Player1.Wins += 1;
-			Dashboard.RoundResult = enRoundResult::Player1Win;
+		case enGameChoice::Paper:
+			if (Player2Choice == enGameChoice::Stone)
+			{
+				Dashboard.Player1.Wins += 1;
+				Dashboard.RoundResult = enRoundResult::Player1Win;
+			}
+			break;
+		case enGameChoice::Stone:
+			if (Player2Choice == enGameChoice::Scissor)
+			{
+				Dashboard.Player1.Wins += 1;
+				Dashboard.RoundResult = enRoundResult::Player1Win;
+			}
+			break;
+		case enGameChoice::Scissor:
+			if (Player2Choice == enGameChoice::Paper)
+			{
+				Dashboard.Player1.Wins += 1;
+				Dashboard.RoundResult = enRoundResult::Player1Win;
+			}
+			break;
+		default:
+			Dashboard.Player2.Wins += 1;
+			Dashboard.RoundResult = enRoundResult::Player2Win;
+			break;
 		}
-		break;
-	case enGameChoice::Stone:
-		if (Player2Choice == enGameChoice::Scissor)
-		{
-			Dashboard.Player1.Wins += 1;
-			Dashboard.RoundResult = enRoundResult::Player1Win;
-		}
-		break;
-	case enGameChoice::Scissor:
-		if (Player2Choice == enGameChoice::Paper)
-		{
-			Dashboard.Player1.Wins += 1;
-			Dashboard.RoundResult = enRoundResult::Player1Win;
-		}
-		break;
-	default:
-		Dashboard.Player2.Wins += 1;
-		Dashboard.RoundResult = enRoundResult::Player2Win;
-		break;
 	}
 }
 
