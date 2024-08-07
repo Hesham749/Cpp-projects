@@ -440,6 +440,7 @@ void MakeTransaction(vector<strClientData>& vClients, string FileName, enTransac
 			if (C.AccNumber == AccNumber)
 			{
 				C = client;
+				break;
 			}
 		}
 		UpdateFileData(vClients, FileName);
