@@ -326,7 +326,7 @@ void DeleteClient(vector <stClientData>& vClients, string FileName)
 			}
 			vClients = vUpdatedClients;
 			UpdateFileData(vUpdatedClients, FileName);
-			cout << "\nClient Deleted Succeffuly" << endl;
+			cout << "\nClient Deleted Successfully" << endl;
 		}
 
 	}
@@ -633,7 +633,8 @@ void PrintUserData(stUsers User)
 	cout << left
 		<< "| " << setw(18) << User.UserName
 		<< "| " << setw(18) << User.Password
-		<< "| " << setw(18) << User.Permissions
+		<< "| " << right << setw(3) << User.Permissions
+
 		<< endl;
 }
 
@@ -721,6 +722,59 @@ void AddUsers(vector <stUsers>& vUsers)
 	} while (ConfirmAction("do you want to add more Users ? [y] , [n] : "));
 }
 
+//Delete user
+
+void PrintUserCard(stUsers User)
+{
+	cout << "User Name   : " << User.UserName << endl;
+	cout << "Password    : " << User.Password << endl;
+	cout << "Permissions : " << User.Permissions << endl;
+}
+
+void UpdateFileData(vector <stUsers>& vUsers)
+{
+	fstream Myfile;
+	Myfile.open(UsersFile, ios::out);
+	if (Myfile.is_open())
+	{
+		for (auto& U : vUsers)
+		{
+			Myfile << RecordToLine(U) << endl;
+		}
+		Myfile.close();
+	}
+}
+
+void DeleteUser(vector <stUsers>& vUsers)
+{
+	ScreenHeader("\tDelete User Screen");
+	string userName = ReadString("Please enter User Name ? ");
+	stUsers User;
+	if (FindUser(User, userName, vUsers))
+	{
+		cout << "\nThe following are the User details :\n\n";
+		PrintUserCard(User);
+		if (User.UserName == "Admin")
+			printf("\nyou can not delete this user\n");
+		else if (ConfirmAction("\nAre you sure you want to delete this User ? y/n "))
+		{
+			vector <stUsers> vUpdatedUsers;
+			for (auto& U : vUsers)
+			{
+				if (U.UserName != userName)
+					vUpdatedUsers.push_back(U);
+			}
+			vUsers = vUpdatedUsers;
+			UpdateFileData(vUpdatedUsers);
+			cout << "\nUser Deleted Successfully" << endl;
+		}
+	}
+	else
+	{
+		cout << "\nUser (" + userName + ") Not Found\n";
+	}
+}
+
 void ManageUsersMenu(vector <stUsers>& vUsers)
 {
 	enManageUsersOptions UserChoice = enManageUsersOptions::eMainMenu;
@@ -743,6 +797,7 @@ void ManageUsersMenu(vector <stUsers>& vUsers)
 			AddUsers(vUsers);
 			break;
 		case eDeleteUser:
+			DeleteUser(vUsers);
 			break;
 		case eUpdateUser:
 			break;
