@@ -147,11 +147,11 @@ void PrintClientCard(stClientData Client)
 	cout << "Balance        : " << Client.AccBalance << endl;
 }
 
-vector <stClientData> DataFromFile(string FileName, string Seperator = "#//#")
+vector <stClientData> GetClients(string Seperator = "#//#")
 {
 	vector <stClientData> vAllClients;
 	fstream MyFile;
-	MyFile.open(FileName, ios::in);
+	MyFile.open(ClientsFile, ios::in);
 	if (MyFile.is_open())
 	{
 		string line = "";
@@ -185,10 +185,10 @@ bool ConfirmAction(string message)
 	return tolower(confirmed) == 'y';
 }
 
-void UpdateFileData(vector <stClientData>& vClients, string FileName)
+void UpdateFileData(vector <stClientData>& vClients)
 {
 	fstream Myfile;
-	Myfile.open(FileName, ios::out);
+	Myfile.open(ClientsFile, ios::out);
 	if (Myfile.is_open())
 	{
 		for (auto& C : vClients)
@@ -283,15 +283,15 @@ stClientData ReadClientData(vector <stClientData>& vClients)
 	return Client;
 }
 
-void AddNewClient(vector <stClientData>& vClients, string FileName)
+void AddNewClient(vector <stClientData>& vClients)
 {
 	stClientData client = ReadClientData(vClients);
-	AddDataLineToFile(FileName, RecordToLine(client));
+	AddDataLineToFile(ClientsFile, RecordToLine(client));
 	vClients.push_back(client);
 	cout << "\nClient added successfully, ";
 }
 
-void AddClients(vector <stClientData>& vClients, string FileName)
+void AddClients(vector <stClientData>& vClients)
 {
 	char addMore = 'y';
 	while (tolower(addMore) == 'y')
@@ -299,7 +299,7 @@ void AddClients(vector <stClientData>& vClients, string FileName)
 		system("cls");
 		ScreenHeader("\tAdd New Clients Screen");
 		cout << "Adding new client :\n";
-		AddNewClient(vClients, FileName);
+		AddNewClient(vClients);
 		cout << "do you want to add more clients ? [y] , [n] : ";
 		cin >> addMore;
 	}
@@ -307,7 +307,7 @@ void AddClients(vector <stClientData>& vClients, string FileName)
 
 //Delete
 
-void DeleteClient(vector <stClientData>& vClients, string FileName)
+void DeleteClient(vector <stClientData>& vClients)
 {
 	ScreenHeader("\tDelete Client Screen");
 	string AccNumber = ReadString("Please enter Account Number ? ");
@@ -325,7 +325,7 @@ void DeleteClient(vector <stClientData>& vClients, string FileName)
 					vUpdatedClients.push_back(C);
 			}
 			vClients = vUpdatedClients;
-			UpdateFileData(vUpdatedClients, FileName);
+			UpdateFileData(vUpdatedClients);
 			cout << "\nClient Deleted Successfully" << endl;
 		}
 
@@ -342,7 +342,7 @@ stClientData UpdateClientData(string AccNumber)
 {
 	stClientData Client;
 	Client.AccNumber = AccNumber;
-	cout << "please enter cliet data : \n";
+	cout << "please enter client data : \n";
 	Client.PinCode = ReadString("\nEnter Pincode ? ");
 	Client.Name = ReadString("Enter Name ? ");
 	Client.Phone = ReadString("Enter Phone ? ");
@@ -350,7 +350,7 @@ stClientData UpdateClientData(string AccNumber)
 	return Client;
 }
 
-void UpdateClient(vector <stClientData>& vClients, string FileName)
+void UpdateClient(vector <stClientData>& vClients)
 {
 	ScreenHeader("\tUpdate Client Info Screen");
 	string AccNumber = ReadString("Please enter Account Number ? ");
@@ -369,7 +369,7 @@ void UpdateClient(vector <stClientData>& vClients, string FileName)
 					break;
 				}
 			}
-			UpdateFileData(vClients, FileName);
+			UpdateFileData(vClients);
 			cout << "\nClient Updated Successfully" << endl;
 		}
 
@@ -435,7 +435,7 @@ void UpdateBalanceAfterTransaction(enTransactionType TransactionType, stClientDa
 	}
 }
 
-void MakeTransaction(vector<stClientData>& vClients, string FileName, enTransactionType TransactionType)
+void MakeTransaction(vector<stClientData>& vClients, enTransactionType TransactionType)
 {
 	if (TransactionType == DepositType)
 		ScreenHeader("\tDeposit Screen");
@@ -461,7 +461,7 @@ void MakeTransaction(vector<stClientData>& vClients, string FileName, enTransact
 				break;
 			}
 		}
-		UpdateFileData(vClients, FileName);
+		UpdateFileData(vClients);
 		cout << "\nDone Successfully , New Balance = " << client.AccBalance << endl;
 	}
 
@@ -502,7 +502,7 @@ void PrintBalancesList(vector<stClientData>& vClients)
 	cout << "\t\t\t" << "Total Balances = " << Total << "\n\n";
 }
 
-void TransactionsMenu(vector <stClientData>& vClient, string FileName)
+void TransactionsMenu(vector <stClientData>& vClient)
 {
 	enTransactionMenuOptions UserChoice = enTransactionMenuOptions::mainMenu;
 	do
@@ -517,10 +517,10 @@ void TransactionsMenu(vector <stClientData>& vClient, string FileName)
 		switch (UserChoice)
 		{
 		case eDeposit:
-			MakeTransaction(vClient, FileName, enTransactionType::DepositType);
+			MakeTransaction(vClient, enTransactionType::DepositType);
 			break;
 		case eWithDraw:
-			MakeTransaction(vClient, FileName, enTransactionType::WithDrawType);
+			MakeTransaction(vClient, enTransactionType::WithDrawType);
 			break;
 		case eTotalBalance:
 			PrintBalancesList(vClient);
@@ -542,11 +542,11 @@ stUsers LineToUser(string Line, string Seperator = "#//#")
 	return User;
 }
 
-vector <stUsers> GetUsers(string FileName, string Seperator = "#//#")
+vector <stUsers> GetUsers(string Seperator = "#//#")
 {
 	vector <stUsers> vAllUsers;
 	fstream MyFile;
-	MyFile.open(FileName, ios::in);
+	MyFile.open(UsersFile, ios::in);
 	if (MyFile.is_open())
 	{
 		string line = "";
@@ -862,6 +862,7 @@ void ManageUsersMenu(vector <stUsers>& vUsers)
 			UpdateUser(vUsers);
 			break;
 		case eFindUser:
+			FindUserResult(vUsers);
 			break;
 		}
 		GoBackToMenu("\n\nPress any key to go back to Manage Users Menu.....");
@@ -891,15 +892,15 @@ void MainMenu(vector <stClientData>& vClients, vector <stUsers>& vUsers)
 				: AccessDeniedMessage();
 			break;
 		case Add:
-			(HasPermission(loggedUser, ListAccess)) ? AddClients(vClients, ClientsFile)
+			(HasPermission(loggedUser, ListAccess)) ? AddClients(vClients)
 				: AccessDeniedMessage();
 			break;
 		case Delete:
-			(HasPermission(loggedUser, DeleteAccess)) ? DeleteClient(vClients, ClientsFile)
+			(HasPermission(loggedUser, DeleteAccess)) ? DeleteClient(vClients)
 				: AccessDeniedMessage();
 			break;
 		case Update:
-			(HasPermission(loggedUser, UpdateAccess)) ? UpdateClient(vClients, ClientsFile)
+			(HasPermission(loggedUser, UpdateAccess)) ? UpdateClient(vClients)
 				: AccessDeniedMessage();
 			break;
 		case Find:
@@ -907,7 +908,7 @@ void MainMenu(vector <stClientData>& vClients, vector <stUsers>& vUsers)
 				: AccessDeniedMessage();
 			break;
 		case TransActions:
-			(HasPermission(loggedUser, TransactionsAccess)) ? TransactionsMenu(vClients, ClientsFile)
+			(HasPermission(loggedUser, TransactionsAccess)) ? TransactionsMenu(vClients)
 				: AccessDeniedMessage();
 			break;
 		case ManageUsers:
@@ -926,11 +927,10 @@ void MainMenu(vector <stClientData>& vClients, vector <stUsers>& vUsers)
 	} while (true);
 }
 
-
 void StartProgram()
 {
-	vector <stClientData> vClients = DataFromFile(ClientsFile);
-	vector <stUsers> vUsers = GetUsers(UsersFile);
+	vector <stClientData> vClients = GetClients();
+	vector <stUsers> vUsers = GetUsers();
 	MainMenu(vClients, vUsers);
 }
 
