@@ -307,7 +307,7 @@ strClientData UpdateClientData(string AccNumber)
 {
 	strClientData Client;
 	Client.AccNumber = AccNumber;
-	cout << "please enter cliet data : \n";
+	cout << "please enter client data : \n";
 	Client.PinCode = ReadString("\nEnter Pincode ? ");
 	Client.Name = ReadString("Enter Name ? ");
 	Client.Phone = ReadString("Enter Phone ? ");
@@ -335,7 +335,6 @@ void UpdateClient(vector <strClientData>& vClients, string FileName)
 				}
 			}
 			UpdateFileData(vClients, FileName);
-			cout << vClients[1].Name << endl;
 			cout << "\nClient Updated Succeffuly" << endl;
 		}
 
