@@ -6,25 +6,31 @@
 using namespace std;
 
 const string ClientsFile = "clients.txt";
-const string UsrersFile = "Users.txt";
+const string UsersFile = "Users.txt";
 
 enum enMainMenuOptions
 {
-	ShowList = 1, Add, Delete, Update, Find, TransActions, Exit
+	ShowList = 1, Add, Delete, Update, Find, TransActions, ManageUsers, LogOut
+};
+
+enum enManageUsersOptions
+{
+	eUsersList = 1, eAddUser, eDeleteUser, eUpdateUser, eFindUser, eMainMenu
 };
 
 enum enTransactionMenuOptions
 {
-	eDeposit = 1, eWithDraw, eTotalBalance, eMainMenu
+	eDeposit = 1, eWithDraw, eTotalBalance, mainMenu
 };
 enum enTransactionType
 {
 	DepositType = 1, WithDrawType
 };
 
-enum enPermissons
+enum enPermissions
 {
-	FullAccess = -1
+	FullAccess = -1, ListAccess = 1, AddAccess = 2, DeleteAccess = 4, UpdateAccess = 8, FindAccess = 16, TransactionsAccess = 32
+	, MangeUsersAccess = 64
 };
 
 struct stClientData
@@ -36,7 +42,7 @@ struct stClientData
 struct stUsers
 {
 	string UserName = "", Password = "";
-	vector <enPermissons> Permissons;
+	short Permissions = 0;
 };
 
 double ReadPositiveNumber(string message)
@@ -196,7 +202,7 @@ void UpdateFileData(vector <stClientData>& vClients, string FileName)
 void ScreenHeader(string Title)
 {
 	cout << "--------------------------------------------\n";
-	cout << "\t" + Title << endl;
+	cout << Title << endl;
 	cout << "--------------------------------------------\n";
 }
 
@@ -212,7 +218,8 @@ void ShowMainMenu()
 	cout << "\t[4] Update Client Info.\n";
 	cout << "\t[5] Find Client.\n";
 	cout << "\t[6] Transactions.\n";
-	cout << "\t[7] Exit.\n";
+	cout << "\t[7] Manage Users.\n";
+	cout << "\t[8] Logout.\n";
 	cout << "======================================================\n";
 
 }
@@ -290,7 +297,7 @@ void AddClients(vector <stClientData>& vClients, string FileName)
 	while (tolower(addMore) == 'y')
 	{
 		system("cls");
-		ScreenHeader("Add New Clients Screen");
+		ScreenHeader("\tAdd New Clients Screen");
 		cout << "Adding new client :\n";
 		AddNewClient(vClients, FileName);
 		cout << "do you want to add more clients ? [y] , [n] : ";
@@ -302,7 +309,7 @@ void AddClients(vector <stClientData>& vClients, string FileName)
 
 void DeleteClient(vector <stClientData>& vClients, string FileName)
 {
-	ScreenHeader("Delete Client Screen");
+	ScreenHeader("\tDelete Client Screen");
 	string AccNumber = ReadString("Please enter Account Number ? ");
 	stClientData client;
 	if (FindClient(client, AccNumber, vClients))
@@ -345,7 +352,7 @@ stClientData UpdateClientData(string AccNumber)
 
 void UpdateClient(vector <stClientData>& vClients, string FileName)
 {
-	ScreenHeader("Update Client Info Screen");
+	ScreenHeader("\tUpdate Client Info Screen");
 	string AccNumber = ReadString("Please enter Account Number ? ");
 	stClientData client;
 	if (FindClient(client, AccNumber, vClients))
@@ -364,7 +371,7 @@ void UpdateClient(vector <stClientData>& vClients, string FileName)
 			}
 			UpdateFileData(vClients, FileName);
 			cout << vClients[1].Name << endl;
-			cout << "\nClient Updated Succeffuly" << endl;
+			cout << "\nClient Updated Successfully" << endl;
 		}
 
 	}
@@ -378,7 +385,7 @@ void UpdateClient(vector <stClientData>& vClients, string FileName)
 
 void FindClientResult(vector <stClientData>& vClients)
 {
-	ScreenHeader("Find Client Screen");
+	ScreenHeader("\tFind Client Screen");
 	string AccNumber = ReadString("Please enter Account Number ? ");
 	stClientData client;
 	if (FindClient(client, AccNumber, vClients))
@@ -398,7 +405,7 @@ void ShowTransactionsMenu()
 {
 	system("cls");
 	cout << "======================================================\n";
-	cout << "\t\tTransations Menu Screen\n";
+	cout << "\t\tTransactions Menu Screen\n";
 	cout << "======================================================\n";
 	cout << "\t[1] Deposit.\n";
 	cout << "\t[2] Withdraw.\n";
@@ -432,9 +439,9 @@ void UpdateBalanceAfterTransaction(enTransactionType TransactionType, stClientDa
 void MakeTransaction(vector<stClientData>& vClients, string FileName, enTransactionType TransactionType)
 {
 	if (TransactionType == DepositType)
-		ScreenHeader("Deposit Screen");
+		ScreenHeader("\tDeposit Screen");
 	else
-		ScreenHeader("WithDraw Screen");
+		ScreenHeader("\tWithDraw Screen");
 	string AccNumber = ReadString("Please enter Account Number ? ");
 	stClientData client;
 	while (!FindClient(client, AccNumber, vClients))
@@ -498,12 +505,12 @@ void PrintBalancesList(vector<stClientData>& vClients)
 
 void TransactionsMenu(vector <stClientData>& vClient, string FileName)
 {
-	enTransactionMenuOptions UserChoice = enTransactionMenuOptions::eMainMenu;
+	enTransactionMenuOptions UserChoice = enTransactionMenuOptions::mainMenu;
 	do
 	{
 		ShowTransactionsMenu();
 		UserChoice = (enTransactionMenuOptions)ReadNumberInRange(1, 4, "Choose what do you want to do ? [1 to 4 ] : ");
-		if (UserChoice == enTransactionMenuOptions::eMainMenu)
+		if (UserChoice == enTransactionMenuOptions::mainMenu)
 		{
 			break;
 		}
@@ -521,7 +528,7 @@ void TransactionsMenu(vector <stClientData>& vClient, string FileName)
 			break;
 		}
 		GoBackToMenu("\n\nPress any key to go back to Transactions Menu.....");
-	} while (UserChoice != eMainMenu);
+	} while (UserChoice != mainMenu);
 }
 
 // login screen 
@@ -532,7 +539,7 @@ stUsers LineToUser(string Line, string Seperator = "#//#")
 	vector <string> vUser = SplitString(Line, Seperator);
 	User.UserName = vUser[0];
 	User.Password = vUser[1];
-
+	User.Permissions = stoi(vUser[2]);
 	return User;
 }
 
@@ -566,80 +573,258 @@ bool FindUser(stUsers& User, string UserName, vector <stUsers>& vUsers)
 	return false;
 }
 
-void Login(stUsers& User)
+void ResetScreen(string Message)
 {
-	
-	while (!FindUser(User))
-	{
-
-	}
-	printf("Enter UserName ?");
-	getline(cin >> ws >> User.UserName);
-	printf("Enter Password ?");
-	getline(cin >> ws >> User.Password);
+	system("cls");
+	ScreenHeader(Message);
 }
 
-stUsers LoggedUser()
+stUsers ReadLoginData(stUsers& User)
+{
+	printf("Enter UserName ? ");
+	getline(cin >> ws, User.UserName);
+	printf("Enter Password ? ");
+	getline(cin >> ws, User.Password);
+	return User;
+}
+
+stUsers Login(vector <stUsers>& vUsers)
+{
+	ResetScreen("\t\tLogin Screen");
+	stUsers User;
+	stUsers Input;
+	ReadLoginData(Input);
+	FindUser(User, Input.UserName, vUsers);
+	while (User.Password != Input.Password)
+	{
+		ResetScreen("\t\tLogin Screen");
+		cout << "Invalid UserName/Password!\n";
+		ReadLoginData(Input);
+		FindUser(User, Input.UserName, vUsers);
+	}
+	return User;
+}
+
+bool HasPermission(stUsers User, enPermissions Permission)
+{
+	return (User.Permissions & Permission);
+}
+
+//manage menu
+
+void ShowManageUsersMenu()
+{
+	system("cls");
+	cout << "======================================================\n";
+	cout << "\t\tManage Users Menu Screen\n";
+	cout << "======================================================\n";
+	cout << "\t[1] List Users.\n";
+	cout << "\t[2] Add New User.\n";
+	cout << "\t[3] Delete User.\n";
+	cout << "\t[4] Update User Info.\n";
+	cout << "\t[5] Find User.\n";
+	cout << "\t[6] Main Menu.\n";
+	cout << "======================================================\n";
+
+}
+
+void PrintUserData(stUsers User)
+{
+	cout << left
+		<< "| " << setw(18) << User.UserName
+		<< "| " << setw(18) << User.Password
+		<< "| " << setw(18) << User.Permissions
+		<< endl;
+}
+
+void PrintUsersList(vector<stUsers>& vUsers)
+{
+	cout << "\n\t\t\tUsers List(" << vUsers.size() << ") User(s)\n";
+	cout << "________________________________________________________________________________\n"
+		<< endl;
+	cout << left
+		<< setw(20) << "| User Name"
+		<< setw(20) << "| Password"
+		<< setw(20) << "| Permissions"
+		<< endl;
+	cout << "________________________________________________________________________________\n"
+		<< endl;
+
+	for (auto& i : vUsers)
+	{
+		PrintUserData(i);
+	}
+	cout << "________________________________________________________________________________\n"
+		<< endl;
+}
+
+// Add user
+
+short ReadUserPermissions()
+{
+	if (ConfirmAction("\nDo you want to give full access ? y/n ? "))
+		return -1;
+	short Permissions = 0;
+	if (ConfirmAction("\nDo you want to give access to :\n\nShow Client List ? y/n ? "))
+		Permissions |= enPermissions::ListAccess;
+	if (ConfirmAction("Add new Client ?   y/n ? "))
+		Permissions |= enPermissions::AddAccess;
+	if (ConfirmAction("Delete Client ?    y/n ? "))
+		Permissions |= enPermissions::DeleteAccess;
+	if (ConfirmAction("Update Client ?    y/n ? "))
+		Permissions |= enPermissions::UpdateAccess;
+	if (ConfirmAction("Find Client ?      y/n ? "))
+		Permissions |= enPermissions::FindAccess;
+	if (ConfirmAction("Transactions ?     y/n ? "))
+		Permissions |= enPermissions::TransactionsAccess;
+	if (ConfirmAction("Manage Users ?     y/n ? "))
+		Permissions |= enPermissions::MangeUsersAccess;
+	return Permissions;
+}
+
+string RecordToLine(stUsers User, string Seperator = "#//#")
+{
+	string st = "";
+	st += User.UserName + Seperator;
+	st += User.Password + Seperator;
+	st += to_string(User.Permissions);
+	return st;
+}
+
+void AddNewUser(vector <stUsers>& vUsers)
 {
 	stUsers User;
+	printf("\nEnter UserName ? ");
+	getline(cin >> ws, User.UserName);
+	while (FindUser(User, User.UserName, vUsers))
+	{
+		printf("\nUser Already Exist\n");
+		printf("Enter UserName ? ");
+		getline(cin >> ws, User.UserName);
+	}
+	printf("Enter Password ? ");
+	getline(cin >> ws, User.Password);
+	User.Permissions = ReadUserPermissions();
+	AddDataLineToFile(UsersFile, RecordToLine(User));
+	vUsers.push_back(User);
+	cout << "\nUser added successfully, ";
 }
 
-void LoginScreen()
+void AddUsers(vector <stUsers>& vUsers)
 {
-	ScreenHeader("\tLogin Screen");
-	Login();
+	do
+	{
+		system("cls");
+		ScreenHeader("\tAdd New Users Screen");
+		cout << "Adding new client :\n";
+		AddNewUser(vUsers);
+	} while (ConfirmAction("do you want to add more Users ? [y] , [n] : "));
+}
+
+void ManageUsersMenu(vector <stUsers>& vUsers)
+{
+	enManageUsersOptions UserChoice = enManageUsersOptions::eMainMenu;
+	do
+	{
+		system("cls");
+		ShowManageUsersMenu();
+		UserChoice = (enManageUsersOptions)ReadNumberInRange(1, 6, "Choose what do you want to do ? [1 to 6 ] : ");
+		if (UserChoice == enManageUsersOptions::eMainMenu)
+		{
+			break;
+		}
+		system("cls");
+		switch (UserChoice)
+		{
+		case eUsersList:
+			PrintUsersList(vUsers);
+			break;
+		case eAddUser:
+			AddUsers(vUsers);
+			break;
+		case eDeleteUser:
+			break;
+		case eUpdateUser:
+			break;
+		case eFindUser:
+			break;
+		}
+		GoBackToMenu("\n\nPress any key to go back to Manage Users Menu.....");
+	} while (UserChoice != eMainMenu);
+}
+
+void AccessDeniedMessage()
+{
+	ScreenHeader("Access Denied,\nyou don't have permission to do this,\nplease contact your Admin");
 }
 
 //main menu
-void MainMenu(vector <stClientData> vClients, string UsersFile)
+
+void MainMenu(vector <stClientData>& vClients, vector <stUsers>& vUsers)
 {
-	enMainMenuOptions UserChoice = enMainMenuOptions::Exit;
+	stUsers loggedUser = Login(vUsers);
+	enMainMenuOptions UserChoice = enMainMenuOptions::LogOut;
 	do
 	{
 		ShowMainMenu();
-		UserChoice = (enMainMenuOptions)ReadNumberInRange(1, 7, "Choose what do you want to do ? [1 to 7 ] : ");
+		UserChoice = (enMainMenuOptions)ReadNumberInRange(1, 8, "Choose what do you want to do ? [1 to 8 ] : ");
 		system("cls");
-		if (UserChoice == enMainMenuOptions::Exit)
+		if (UserChoice == enMainMenuOptions::LogOut)
 		{
-			ScreenHeader("Program Ends :-)");
+			MainMenu(vClients, vUsers);
 			break;
 		}
 		switch (UserChoice)
 		{
 		case ShowList:
-			PrintClientsList(vClients);
+			(HasPermission(loggedUser, ListAccess)) ? PrintClientsList(vClients)
+				: AccessDeniedMessage();
 			break;
 		case Add:
-			AddClients(vClients, ClientsFile);
+			(HasPermission(loggedUser, ListAccess)) ? AddClients(vClients, ClientsFile)
+				: AccessDeniedMessage();
 			break;
 		case Delete:
-			DeleteClient(vClients, ClientsFile);
+			(HasPermission(loggedUser, DeleteAccess)) ? DeleteClient(vClients, ClientsFile)
+				: AccessDeniedMessage();
 			break;
 		case Update:
-			UpdateClient(vClients, ClientsFile);
+			(HasPermission(loggedUser, UpdateAccess)) ? UpdateClient(vClients, ClientsFile)
+				: AccessDeniedMessage();
 			break;
 		case Find:
-			FindClientResult(vClients);
+			(HasPermission(loggedUser, FindAccess)) ? FindClientResult(vClients)
+				: AccessDeniedMessage();
 			break;
 		case TransActions:
-			TransactionsMenu(vClients, ClientsFile);
+			(HasPermission(loggedUser, TransactionsAccess)) ? TransactionsMenu(vClients, ClientsFile)
+				: AccessDeniedMessage();
+			break;
+		case ManageUsers:
+			(HasPermission(loggedUser, MangeUsersAccess)) ? ManageUsersMenu(vUsers)
+				: AccessDeniedMessage();
 			break;
 		}
-		if (UserChoice != TransActions)
+		if ((UserChoice != TransActions && UserChoice != ManageUsers)
+			|| (!HasPermission(loggedUser, MangeUsersAccess)
+				&& !HasPermission(loggedUser, TransactionsAccess))
+			)
 			GoBackToMenu("\n\nPress any key to go back to main Menu.....");
-	} while (UserChoice != enMainMenuOptions::Exit);
+	} while (UserChoice != enMainMenuOptions::LogOut);
 }
 
 
 void StartProgram()
 {
 	vector <stClientData> vClients = DataFromFile(ClientsFile);
-	vector <stUsers> vUsers = GetUsers(UsrersFile);
-	LoginScreen();
-	//MainMenu(ClientsFile, UsrersFile);
+	vector <stUsers> vUsers = GetUsers(UsersFile);
+	MainMenu(vClients, vUsers);
 }
 
 int main()
 {
 	StartProgram();
+	system("pause>0");
 }
+
+
