@@ -370,7 +370,6 @@ void UpdateClient(vector <stClientData>& vClients, string FileName)
 				}
 			}
 			UpdateFileData(vClients, FileName);
-			cout << vClients[1].Name << endl;
 			cout << "\nClient Updated Successfully" << endl;
 		}
 
@@ -581,7 +580,7 @@ void ResetScreen(string Message)
 
 stUsers ReadLoginData(stUsers& User)
 {
-	printf("Enter UserName ? ");
+	printf("Enter User Name ? ");
 	getline(cin >> ws, User.UserName);
 	printf("Enter Password ? ");
 	getline(cin >> ws, User.Password);
@@ -775,6 +774,48 @@ void DeleteUser(vector <stUsers>& vUsers)
 	}
 }
 
+//Update user
+
+stUsers UpdateUserData(string AccNumber)
+{
+	stUsers User;
+	User.UserName = AccNumber;
+	cout << "please enter User data : \n";
+	User.Password = ReadString("\nEnter Password ? ");
+	User.Permissions = ReadUserPermissions();
+	return User;
+}
+
+void UpdateUser(vector <stUsers>& vUsers)
+{
+	ScreenHeader("\tUpdate User Info Screen");
+	string userName = ReadString("Please enter User Name ? ");
+	stUsers user;
+	if (FindUser(user, userName, vUsers))
+	{
+		cout << "\nThe following are the user details :\n\n";
+		PrintUserCard(user);
+		if (ConfirmAction("\nAre you sure you want to update this user ? y/n "))
+		{
+			for (auto& U : vUsers)
+			{
+				if (U.UserName == userName) {
+
+					U = UpdateUserData(userName);
+					break;
+				}
+			}
+			UpdateFileData(vUsers);
+			cout << "\nUser Updated Successfully" << endl;
+		}
+
+	}
+	else
+	{
+		cout << "\nUser (" + userName + ") Not Found\n";
+	}
+}
+
 void ManageUsersMenu(vector <stUsers>& vUsers)
 {
 	enManageUsersOptions UserChoice = enManageUsersOptions::eMainMenu;
@@ -800,6 +841,7 @@ void ManageUsersMenu(vector <stUsers>& vUsers)
 			DeleteUser(vUsers);
 			break;
 		case eUpdateUser:
+			UpdateUser(vUsers);
 			break;
 		case eFindUser:
 			break;
@@ -818,17 +860,12 @@ void AccessDeniedMessage()
 void MainMenu(vector <stClientData>& vClients, vector <stUsers>& vUsers)
 {
 	stUsers loggedUser = Login(vUsers);
-	enMainMenuOptions UserChoice = enMainMenuOptions::LogOut;
+	enMainMenuOptions UserChoice;
 	do
 	{
 		ShowMainMenu();
 		UserChoice = (enMainMenuOptions)ReadNumberInRange(1, 8, "Choose what do you want to do ? [1 to 8 ] : ");
 		system("cls");
-		if (UserChoice == enMainMenuOptions::LogOut)
-		{
-			MainMenu(vClients, vUsers);
-			break;
-		}
 		switch (UserChoice)
 		{
 		case ShowList:
@@ -859,13 +896,16 @@ void MainMenu(vector <stClientData>& vClients, vector <stUsers>& vUsers)
 			(HasPermission(loggedUser, MangeUsersAccess)) ? ManageUsersMenu(vUsers)
 				: AccessDeniedMessage();
 			break;
+		case LogOut:
+			loggedUser = Login(vUsers);
+			break;
 		}
-		if ((UserChoice != TransActions && UserChoice != ManageUsers)
+		if ((UserChoice != TransActions && UserChoice != ManageUsers && UserChoice != LogOut)
 			|| (!HasPermission(loggedUser, MangeUsersAccess)
 				&& !HasPermission(loggedUser, TransactionsAccess))
 			)
 			GoBackToMenu("\n\nPress any key to go back to main Menu.....");
-	} while (UserChoice != enMainMenuOptions::LogOut);
+	} while (true);
 }
 
 
