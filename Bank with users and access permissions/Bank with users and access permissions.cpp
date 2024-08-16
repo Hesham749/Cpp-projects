@@ -816,6 +816,24 @@ void UpdateUser(vector <stUsers>& vUsers)
 	}
 }
 
+//find user
+
+void FindUserResult(vector <stUsers>& vUsers)
+{
+	ScreenHeader("\tFind User Screen");
+	string userName = ReadString("Please enter Account Number ? ");
+	stUsers user;
+	if (FindUser(user, userName, vUsers))
+	{
+		cout << "\nThe following are the user details :\n\n";
+		PrintUserCard(user);
+	}
+	else
+	{
+		cout << "\nUser (" + userName + ") Not Found\n";
+	}
+}
+
 void ManageUsersMenu(vector <stUsers>& vUsers)
 {
 	enManageUsersOptions UserChoice = enManageUsersOptions::eMainMenu;
