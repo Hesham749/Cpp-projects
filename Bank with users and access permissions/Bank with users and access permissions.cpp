@@ -45,6 +45,9 @@ struct stUsers
 	short Permissions = 0;
 };
 
+stUsers loggedUser;
+
+
 double ReadPositiveNumber(string message)
 {
 	double Number = 0;
@@ -604,9 +607,9 @@ stUsers Login(vector <stUsers>& vUsers)
 	return User;
 }
 
-bool HasPermission(stUsers User, enPermissions Permission)
+bool HasPermission(enPermissions Permission)
 {
-	return (User.Permissions & Permission);
+	return (loggedUser.Permissions & Permission);
 }
 
 //manage menu
@@ -872,13 +875,14 @@ void ManageUsersMenu(vector <stUsers>& vUsers)
 void AccessDeniedMessage()
 {
 	ScreenHeader("Access Denied,\nyou don't have permission to do this,\nplease contact your Admin");
+	GoBackToMenu("\n\nPress any key to go back to main Menu.....");
 }
 
 //main menu
 
 void MainMenu(vector <stClientData>& vClients, vector <stUsers>& vUsers)
 {
-	stUsers loggedUser = Login(vUsers);
+	loggedUser = Login(vUsers);
 	enMainMenuOptions UserChoice;
 	do
 	{
@@ -888,41 +892,38 @@ void MainMenu(vector <stClientData>& vClients, vector <stUsers>& vUsers)
 		switch (UserChoice)
 		{
 		case ShowList:
-			(HasPermission(loggedUser, ListAccess)) ? PrintClientsList(vClients)
+			(HasPermission(ListAccess)) ? PrintClientsList(vClients)
 				: AccessDeniedMessage();
 			break;
 		case Add:
-			(HasPermission(loggedUser, ListAccess)) ? AddClients(vClients)
+			(HasPermission(ListAccess)) ? AddClients(vClients)
 				: AccessDeniedMessage();
 			break;
 		case Delete:
-			(HasPermission(loggedUser, DeleteAccess)) ? DeleteClient(vClients)
+			(HasPermission(DeleteAccess)) ? DeleteClient(vClients)
 				: AccessDeniedMessage();
 			break;
 		case Update:
-			(HasPermission(loggedUser, UpdateAccess)) ? UpdateClient(vClients)
+			(HasPermission(UpdateAccess)) ? UpdateClient(vClients)
 				: AccessDeniedMessage();
 			break;
 		case Find:
-			(HasPermission(loggedUser, FindAccess)) ? FindClientResult(vClients)
+			(HasPermission(FindAccess)) ? FindClientResult(vClients)
 				: AccessDeniedMessage();
 			break;
 		case TransActions:
-			(HasPermission(loggedUser, TransactionsAccess)) ? TransactionsMenu(vClients)
+			(HasPermission(TransactionsAccess)) ? TransactionsMenu(vClients)
 				: AccessDeniedMessage();
 			break;
 		case ManageUsers:
-			(HasPermission(loggedUser, MangeUsersAccess)) ? ManageUsersMenu(vUsers)
+			(HasPermission(MangeUsersAccess)) ? ManageUsersMenu(vUsers)
 				: AccessDeniedMessage();
 			break;
 		case LogOut:
 			loggedUser = Login(vUsers);
 			break;
 		}
-		if ((UserChoice != TransActions && UserChoice != ManageUsers && UserChoice != LogOut)
-			|| (!HasPermission(loggedUser, MangeUsersAccess)
-				&& !HasPermission(loggedUser, TransactionsAccess))
-			)
+		if ((UserChoice != TransActions && UserChoice != ManageUsers && UserChoice != LogOut))
 			GoBackToMenu("\n\nPress any key to go back to main Menu.....");
 	} while (true);
 }
