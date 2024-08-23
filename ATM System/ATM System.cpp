@@ -355,7 +355,7 @@ stClient ReadLoginData(stClient& Client)
 	return Client;
 }
 
-bool IsvalidLogin(stClient& Client, vector <stClient>& vClients)
+bool IsValidLogin(stClient& Client, vector <stClient>& vClients)
 {
 	return(FindClient(loggedClient, Client.AccNumber, vClients) && loggedClient.PinCode == Client.PinCode);
 }
@@ -370,7 +370,7 @@ void Login(vector <stClient>& vClients)
 		if (!isLogged)
 			cout << "Invalid Account Number/Pin!\n";
 		ReadLoginData(TempClient);
-	} while (!(isLogged = IsvalidLogin(TempClient, vClients)));
+	} while (!(isLogged = IsValidLogin(TempClient, vClients)));
 }
 
 // balance
