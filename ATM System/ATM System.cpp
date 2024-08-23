@@ -355,20 +355,22 @@ stClient ReadLoginData(stClient& Client)
 	return Client;
 }
 
-stClient Login(vector <stClient>& vClients)
+bool IsvalidLogin(stClient& Client, vector <stClient>& vClients)
 {
-	ResetScreen("\t\tLogin Screen");
-	stClient Client;
-	stClient Input;
+	return(FindClient(loggedClient, Client.AccNumber, vClients) && loggedClient.PinCode == Client.PinCode);
+}
+
+void Login(vector <stClient>& vClients)
+{
+	stClient TempClient;
+	bool isLogged = true;
 	do
 	{
 		ResetScreen("\t\tLogin Screen");
-		if (Client.PinCode != Input.PinCode)
+		if (!isLogged)
 			cout << "Invalid Account Number/Pin!\n";
-		ReadLoginData(Input);
-		FindClient(Client, Input.AccNumber, vClients);
-	} while (Client.PinCode != Input.PinCode);
-	return Client;
+		ReadLoginData(TempClient);
+	} while (!(isLogged = IsvalidLogin(TempClient, vClients)));
 }
 
 // balance
@@ -383,7 +385,7 @@ void CheckBalance()
 
 void MainMenu(vector <stClient>& vClients)
 {
-	loggedClient = Login(vClients);
+	Login(vClients);
 	enMainMenuOptions UserChoice;
 	do
 	{
@@ -405,7 +407,7 @@ void MainMenu(vector <stClient>& vClients)
 			CheckBalance();
 			break;
 		case LogOut:
-			loggedClient = Login(vClients);
+			Login(vClients);
 			break;
 		}
 
