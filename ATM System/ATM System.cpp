@@ -290,7 +290,7 @@ void MakeTransaction(vector<stClient>& vClients, enTransactionType TransactionTy
 
 //total balances
 
-short GetQuickTransactionValue(enQuickTransactionMenu Choice)
+short GetQuickWithdrawValue(enQuickTransactionMenu Choice)
 {
 	if (Choice == Exit)
 		return 0;
@@ -318,21 +318,25 @@ short GetQuickTransactionValue(enQuickTransactionMenu Choice)
 void QuickTransactionsMenu(vector <stClient>& vClients)
 {
 	enQuickTransactionMenu UserChoice = enQuickTransactionMenu::Exit;
+	short withdrawAmount = 0;
 	do
 	{
 		system("cls");
 		ShowQuickTransactionsMenu();
 		printf("\nYour balance is %.2f ", loggedClient.AccBalance);
 		UserChoice = (enQuickTransactionMenu)ReadNumberInRange(1, 9, "Choose what to Withdraw from [1 to 8 ] : ");
-		if (GetQuickTransactionValue(UserChoice) > loggedClient.AccBalance)
+		if (UserChoice == Exit)
+			return;
+		withdrawAmount = GetQuickWithdrawValue(UserChoice);
+		if (withdrawAmount > loggedClient.AccBalance)
 		{
 			cout << "\n\nThe amount exceeds balance, make another choice.\n";
 			GoBackToMenu("\npress any key to continue...");
 		}
-	} while (GetQuickTransactionValue(UserChoice) > loggedClient.AccBalance);
+	} while (withdrawAmount > loggedClient.AccBalance);
 	if (ConfirmAction("\n\nAre you sure you want to perform this transaction ? y/n ? "))
 	{
-		loggedClient.AccBalance -= GetQuickTransactionValue(UserChoice);
+		loggedClient.AccBalance -= withdrawAmount;
 		UpdateClient(vClients);
 		cout << "\nDone Successfully , New Balance = " << loggedClient.AccBalance << endl;
 	}
@@ -410,8 +414,6 @@ void MainMenu(vector <stClient>& vClients)
 			Login(vClients);
 			break;
 		}
-
-
 		if ((UserChoice != LogOut))
 			GoBackToMenu("\n\nPress any key to go back to main Menu.....");
 	} while (true);
