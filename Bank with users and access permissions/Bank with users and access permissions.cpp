@@ -533,7 +533,7 @@ void TransactionsMenu(vector <stClientData>& vClient)
 	} while (UserChoice != mainMenu);
 }
 
-// login screen 
+// login screen
 
 stUsers LineToUser(string Line, string Seperator = "#//#")
 {
@@ -895,7 +895,7 @@ void MainMenu(vector <stClientData>& vClients, vector <stUsers>& vUsers)
 				: AccessDeniedMessage();
 			break;
 		case Add:
-			(HasPermission(ListAccess)) ? AddClients(vClients)
+			(HasPermission(AddAccess)) ? AddClients(vClients)
 				: AccessDeniedMessage();
 			break;
 		case Delete:
@@ -939,5 +939,3 @@ int main()
 	StartProgram();
 	system("pause>0");
 }
-
-
