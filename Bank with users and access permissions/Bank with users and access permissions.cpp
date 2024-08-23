@@ -616,14 +616,14 @@ bool IsValidLogin(stUsers &User, vector<stUsers> &vUsers)
 void Login(vector<stUsers> &vUsers)
 {
 	stUsers TempUser;
-	bool isLogged = true;
+	bool LoginFailed = false;
 	do
 	{
 		ResetScreen("\t\tLogin Screen");
-		if (!isLogged)
+		if (LoginFailed)
 			cout << "Invalid User Name/Password!\n";
 		ReadLoginData(TempUser);
-	} while (!(isLogged = IsValidLogin(TempUser, vUsers)));
+	} while (LoginFailed = !IsValidLogin(TempUser, vUsers));
 }
 
 bool HasPermission(enPermissions Permission)

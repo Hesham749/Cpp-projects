@@ -363,14 +363,14 @@ bool IsValidLogin(stClient& Client, vector <stClient>& vClients)
 void Login(vector <stClient>& vClients)
 {
 	stClient TempClient;
-	bool isLogged = true;
+	bool LoginFailed = false;
 	do
 	{
 		ResetScreen("\t\tLogin Screen");
-		if (!isLogged)
+		if (LoginFailed)
 			cout << "Invalid Account Number/Pin!\n";
 		ReadLoginData(TempClient);
-	} while (!(isLogged = IsValidLogin(TempClient, vClients)));
+	} while (LoginFailed = !IsValidLogin(TempClient, vClients));
 }
 
 // balance
