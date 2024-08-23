@@ -608,7 +608,7 @@ stUsers ReadLoginData(stUsers &User)
 	return User;
 }
 
-bool IsvalidLogin(stUsers &User, vector<stUsers> &vUsers)
+bool IsValidLogin(stUsers &User, vector<stUsers> &vUsers)
 {
 	return (FindUser(loggedUser, User.UserName, vUsers) && loggedUser.Password == User.Password);
 }
@@ -623,7 +623,7 @@ void Login(vector<stUsers> &vUsers)
 		if (!isLogged)
 			cout << "Invalid User Name/Password!\n";
 		ReadLoginData(TempUser);
-	} while (!(isLogged = IsvalidLogin(TempUser, vUsers)));
+	} while (!(isLogged = IsValidLogin(TempUser, vUsers)));
 }
 
 bool HasPermission(enPermissions Permission)
