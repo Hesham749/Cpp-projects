@@ -418,7 +418,7 @@ void ShowTransactionsMenu()
 
 // deposit & withdraw
 
-void UpdateBalanceAfterTransaction(enTransactionType TransactionType, stClientData& client)
+void TransactionBeforeConfirm(enTransactionType TransactionType, stClientData& client)
 {
 	double addedAmount = 0;
 	if (TransactionType == DepositType)
@@ -453,7 +453,7 @@ void MakeTransaction(vector<stClientData>& vClients, enTransactionType Transacti
 	}
 	cout << "\nThe following are the client details :\n\n";
 	PrintClientCard(client);
-	UpdateBalanceAfterTransaction(TransactionType, client);
+	TransactionBeforeConfirm(TransactionType, client);
 	if (ConfirmAction("\n\nAre you sure you want to perform this transaction ? y/n ? "))
 	{
 		for (auto& C : vClients)

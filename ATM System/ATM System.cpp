@@ -322,7 +322,7 @@ void QuickTransactionsMenu(vector <stClient>& vClients)
 	{
 		system("cls");
 		ShowQuickTransactionsMenu();
-		printf("\nYour balance is %.f ", loggedClient.AccBalance);
+		printf("\nYour balance is %.2f ", loggedClient.AccBalance);
 		UserChoice = (enQuickTransactionMenu)ReadNumberInRange(1, 9, "Choose what to Withdraw from [1 to 8 ] : ");
 		if (GetQuickTransactionValue(UserChoice) > loggedClient.AccBalance)
 		{
@@ -376,7 +376,7 @@ stClient Login(vector <stClient>& vClients)
 void CheckBalance()
 {
 	ScreenHeader("\t\tCheck Balance Screen");
-	printf("Your Balance is %.f\n", loggedClient.AccBalance);
+	printf("Your Balance is %.2f\n", loggedClient.AccBalance);
 }
 
 //main menu
