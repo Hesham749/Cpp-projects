@@ -595,15 +595,14 @@ stUsers Login(vector <stUsers>& vUsers)
 	ResetScreen("\t\tLogin Screen");
 	stUsers User;
 	stUsers Input;
-	ReadLoginData(Input);
-	FindUser(User, Input.UserName, vUsers);
-	while (User.Password != Input.Password)
+	do
 	{
 		ResetScreen("\t\tLogin Screen");
-		cout << "Invalid UserName/Password!\n";
+		if (User.Password != Input.Password)
+			cout << "Invalid UserName/Password!\n";
 		ReadLoginData(Input);
 		FindUser(User, Input.UserName, vUsers);
-	}
+	} while (User.Password != Input.Password);
 	return User;
 }
 
