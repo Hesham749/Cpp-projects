@@ -6,23 +6,20 @@
 using namespace std;
 
 const string ClientsFile = "clients.txt";
-const string UsersFile = "Users.txt";
 
 enum enMainMenuOptions
 {
-	ShowList = 1, Add, Delete, Update, Find, TransActions, LogOut
+	eQuickWithdraw = 1, eNormalWithdraw, eMainDeposit, eCheckBalnce, LogOut
 };
 
-
-enum enTransactionMenuOptions
+enum enQuickTransactionMenu
 {
-	eDeposit = 1, eWithDraw, eTotalBalance, mainMenu
+	eFifty = 1, eOneHundred, eTwoHundred, eFourHundred, eSixHundred, eEightHundred, eOneThousand, eTwoThousand, Exit
 };
 enum enTransactionType
 {
-	DepositType = 1, WithDrawType
+	QuickWithDrawType = 1, NormalWithDrawType, DepositType
 };
-
 
 struct stClient
 {
@@ -30,13 +27,11 @@ struct stClient
 	double AccBalance = 0;
 };
 
-
 stClient loggedClient;
 
-
-double ReadPositiveNumber(string message)
+int ReadPositiveNumber(string message)
 {
-	double Number = 0;
+	int Number = 0;
 	do
 	{
 		cout << message;
@@ -127,15 +122,6 @@ void AddDataLineToFile(string FileName, string DataLine)
 	}
 }
 
-void PrintClientCard(stClient Client)
-{
-	cout << "Account Number : " << Client.AccNumber << endl;
-	cout << "Pincode        : " << Client.PinCode << endl;
-	cout << "Name           : " << Client.Name << endl;
-	cout << "Phone          : " << Client.Phone << endl;
-	cout << "Balance        : " << Client.AccBalance << endl;
-}
-
 vector <stClient> GetClients(string Seperator = "#//#")
 {
 	vector <stClient> vAllClients;
@@ -199,16 +185,13 @@ void ShowMainMenu()
 {
 	system("cls");
 	cout << "======================================================\n";
-	cout << "\t\tMain Menu Screen\n";
+	cout << "\t\tATM Main Menu Screen\n";
 	cout << "======================================================\n";
-	cout << "\t[1] Show Clients list.\n";
-	cout << "\t[2] Add New Client.\n";
-	cout << "\t[3] Delete Client.\n";
-	cout << "\t[4] Update Client Info.\n";
-	cout << "\t[5] Find Client.\n";
-	cout << "\t[6] Transactions.\n";
-	cout << "\t[7] Manage Users.\n";
-	cout << "\t[8] Logout.\n";
+	cout << "\t[1] Quick Withdraw.\n";
+	cout << "\t[2] Normal Withdraw.\n";
+	cout << "\t[3] Deposit.\n";
+	cout << "\t[4] Check Balance.\n";
+	cout << "\t[5] Logout.\n";
 	cout << "======================================================\n";
 
 }
@@ -219,308 +202,143 @@ void GoBackToMenu(string message)
 	system("pause>0");
 }
 
-//list
-
-void PrintClientData(stClient Client)
-{
-	cout << left
-		<< "| " << setw(15) << Client.AccNumber
-		<< "| " << setw(9) << Client.PinCode
-		<< "| " << setw(23) << Client.Name
-		<< "| " << setw(12) << Client.Phone
-		<< "| " << setw(13) << Client.AccBalance
-		<< endl;
-}
-
-void PrintClientsList(vector<stClient>& vClients)
-{
-	cout << "\n\t\t\tClients List(" << vClients.size() << ") client(s)\n";
-	cout << "________________________________________________________________________________\n"
-		<< endl;
-	cout << left
-		<< setw(17) << "| Account Number"
-		<< setw(11) << "| Pin Code"
-		<< setw(25) << "| Client Name"
-		<< setw(14) << "| Phone"
-		<< setw(15) << "| Balance"
-		<< endl;
-	cout << "________________________________________________________________________________\n"
-		<< endl;
-
-	for (auto& i : vClients)
-	{
-		PrintClientData(i);
-	}
-	cout << "________________________________________________________________________________\n"
-		<< endl;
-}
-
-//Add
-
-stClient ReadClientData(vector <stClient>& vClients)
-{
-	stClient Client;
-	Client.AccNumber = ReadString("\nEnter Account Number ? ");
-	while (FindClient(Client, Client.AccNumber, vClients))
-	{
-		Client.AccNumber = ReadString("\nClient with [" + Client.AccNumber + "] already exists, Enter another Account Number ? ");
-	}
-	Client.PinCode = ReadString("Enter Pincode ? ");
-	Client.Name = ReadString("Enter Name ? ");
-	Client.Phone = ReadString("Enter Phone ? ");
-	Client.AccBalance = ReadPositiveNumber("Enter Acc Balance ? ");
-	return Client;
-}
-
-void AddNewClient(vector <stClient>& vClients)
-{
-	stClient client = ReadClientData(vClients);
-	AddDataLineToFile(ClientsFile, RecordToLine(client));
-	vClients.push_back(client);
-	cout << "\nClient added successfully, ";
-}
-
-void AddClients(vector <stClient>& vClients)
-{
-	char addMore = 'y';
-	while (tolower(addMore) == 'y')
-	{
-		system("cls");
-		ScreenHeader("\tAdd New Clients Screen");
-		cout << "Adding new client :\n";
-		AddNewClient(vClients);
-		cout << "do you want to add more clients ? [y] , [n] : ";
-		cin >> addMore;
-	}
-}
-
-//Delete
-
-void DeleteClient(vector <stClient>& vClients)
-{
-	ScreenHeader("\tDelete Client Screen");
-	string AccNumber = ReadString("Please enter Account Number ? ");
-	stClient client;
-	if (FindClient(client, AccNumber, vClients))
-	{
-		cout << "\nThe following are the client details :\n\n";
-		PrintClientCard(client);
-		if (ConfirmAction("\nAre you sure you want to delete this client ? y/n "))
-		{
-			vector <stClient> vUpdatedClients;
-			for (auto& C : vClients)
-			{
-				if (C.AccNumber != AccNumber)
-					vUpdatedClients.push_back(C);
-			}
-			vClients = vUpdatedClients;
-			UpdateFileData(vUpdatedClients);
-			cout << "\nClient Deleted Successfully" << endl;
-		}
-
-	}
-	else
-	{
-		cout << "\nClient with number (" + AccNumber + ") Not Found\n";
-	}
-}
-
 //Update
-
-stClient UpdateClientData(string AccNumber)
-{
-	stClient Client;
-	Client.AccNumber = AccNumber;
-	cout << "please enter client data : \n";
-	Client.PinCode = ReadString("\nEnter Pincode ? ");
-	Client.Name = ReadString("Enter Name ? ");
-	Client.Phone = ReadString("Enter Phone ? ");
-	Client.AccBalance = ReadPositiveNumber("Enter Acc BAlance ? ");
-	return Client;
-}
 
 void UpdateClient(vector <stClient>& vClients)
 {
-	ScreenHeader("\tUpdate Client Info Screen");
-	string AccNumber = ReadString("Please enter Account Number ? ");
-	stClient client;
-	if (FindClient(client, AccNumber, vClients))
-	{
-		cout << "\nThe following are the client details :\n\n";
-		PrintClientCard(client);
-		if (ConfirmAction("\nAre you sure you want to update this client ? y/n "))
-		{
-			for (auto& C : vClients)
-			{
-				if (C.AccNumber == AccNumber) {
 
-					C = UpdateClientData(AccNumber);
-					break;
-				}
-			}
-			UpdateFileData(vClients);
-			cout << "\nClient Updated Successfully" << endl;
+	for (auto& C : vClients)
+	{
+		if (C.AccNumber == loggedClient.AccNumber) {
+
+			C = loggedClient;
+			break;
 		}
-
 	}
-	else
-	{
-		cout << "\nClient with number (" + AccNumber + ") Not Found\n";
-	}
+	UpdateFileData(vClients);
 }
 
-//find
 
-void FindClientResult(vector <stClient>& vClients)
-{
-	ScreenHeader("\tFind Client Screen");
-	string AccNumber = ReadString("Please enter Account Number ? ");
-	stClient client;
-	if (FindClient(client, AccNumber, vClients))
-	{
-		cout << "\nThe following are the client details :\n\n";
-		PrintClientCard(client);
-	}
-	else
-	{
-		cout << "\nClient with number (" + AccNumber + ") Not Found\n";
-	}
-}
 
 //transactions
 
-void ShowTransactionsMenu()
+void ShowQuickTransactionsMenu()
 {
 	system("cls");
-	cout << "======================================================\n";
-	cout << "\t\tTransactions Menu Screen\n";
-	cout << "======================================================\n";
-	cout << "\t[1] Deposit.\n";
-	cout << "\t[2] Withdraw.\n";
-	cout << "\t[3] Total Balances.\n";
-	cout << "\t[4] Main Menu.\n";
+	ScreenHeader("\t\tQuick Withdraw");
+	printf("\t[1] %-4d", 50);
+	printf("\t[2] %-4d\n", 100);
+	printf("\t[3] %-4d", 200);
+	printf("\t[4] %-4d\n", 400);
+	printf("\t[5] %-4d", 600);
+	printf("\t[6] %-4d\n", 800);
+	printf("\t[7] %-4d", 1000);
+	printf("\t[8] %-4d\n", 2000);
+	printf("\t[9] Exit\n");
 	cout << "======================================================\n";
 }
 
 // deposit & withdraw
 
-void UpdateBalanceAfterTransaction(enTransactionType TransactionType, stClient& client)
+bool ValidTransaction(int AddAmount)
 {
-	double addedAmount = 0;
+	return(AddAmount % 50 == 0);
+}
+
+void TransactionBeforeConfirm(enTransactionType TransactionType, stClient& Client)
+{
+	int addedAmount = 0;
 	if (TransactionType == DepositType)
 	{
-		addedAmount = ReadPositiveNumber("\nPlease enter Deposit Amount ? ");
-		client.AccBalance += addedAmount;
+		do
+		{
+			addedAmount = ReadPositiveNumber("\nPlease enter Amount multiple of 50's ? ");
+		} while (!ValidTransaction(addedAmount));
+		Client.AccBalance += addedAmount;
 	}
 	else
 	{
-		addedAmount = ReadPositiveNumber("\nPlease enter WithDraw Amount ? ");
-		while (addedAmount > client.AccBalance)
+		do
 		{
-			cout << "\nAmount Exceeds the balance, you can Withdraw up to : " << client.AccBalance << endl;
-			addedAmount = ReadPositiveNumber("Please enter another Amount ? ");
-		}
-		client.AccBalance -= addedAmount;
+			if (addedAmount > Client.AccBalance)
+				cout << "\nAmount Exceeds the balance, you can Withdraw up to : " << Client.AccBalance << endl;
+			addedAmount = ReadPositiveNumber("Please enter Amount multiple of 50's ? ");
+		} while (addedAmount > Client.AccBalance || !ValidTransaction(addedAmount));
+
+		Client.AccBalance -= addedAmount;
 	}
 }
 
 void MakeTransaction(vector<stClient>& vClients, enTransactionType TransactionType)
 {
+	stClient tempClient;
+	tempClient.AccBalance = loggedClient.AccBalance;
+
 	if (TransactionType == DepositType)
-		ScreenHeader("\tDeposit Screen");
-	else
-		ScreenHeader("\tWithDraw Screen");
-	string AccNumber = ReadString("Please enter Account Number ? ");
-	stClient client;
-	while (!FindClient(client, AccNumber, vClients))
+		ScreenHeader("\t\tDeposit Screen");
+	else if (TransactionType == NormalWithDrawType)
+		ScreenHeader("\t  Normal Withdraw Screen");
+	TransactionBeforeConfirm(TransactionType, tempClient);
+	if (ConfirmAction("are you sure you want to perform this transaction ? y/n ? "))
 	{
-		cout << "\nClient with Account number (" + AccNumber + ") does not exist.\n";
-		AccNumber = ReadString("\nPlease enter Account Number ? ");
-	}
-	cout << "\nThe following are the client details :\n\n";
-	PrintClientCard(client);
-	UpdateBalanceAfterTransaction(TransactionType, client);
-	if (ConfirmAction("\n\nAre you sure you want to perform this transaction ? y/n ? "))
-	{
-		for (auto& C : vClients)
-		{
-			if (C.AccNumber == AccNumber)
-			{
-				C = client;
-				break;
-			}
-		}
-		UpdateFileData(vClients);
-		cout << "\nDone Successfully , New Balance = " << client.AccBalance << endl;
+		loggedClient.AccBalance = tempClient.AccBalance;
+		UpdateClient(vClients);
+		cout << "\nDone Successfully , New Balance = " << loggedClient.AccBalance << endl;
 	}
 
 }
 
 //total balances
 
-void PrintClientBalance(stClient Client)
+short GetQuickTransactionValue(enQuickTransactionMenu Choice)
 {
-	cout << left
-		<< "| " << setw(18) << Client.AccNumber
-		<< "| " << setw(33) << Client.Name
-		<< "| " << setw(18) << Client.AccBalance
-		<< endl;
-}
-
-void PrintBalancesList(vector<stClient>& vClients)
-{
-	double Total = 0;
-	cout << "\n\t\t\tBalances List(" << vClients.size() << ") client(s)\n";
-	cout << "________________________________________________________________________________\n"
-		<< endl;
-	cout << left
-		<< setw(20) << "| Account Number"
-		<< setw(35) << "| Client Name"
-		<< setw(20) << "| Balance"
-		<< endl;
-	cout << "________________________________________________________________________________\n"
-		<< endl;
-
-	for (auto& i : vClients)
+	if (Choice == Exit)
+		return 0;
+	switch (Choice)
 	{
-		PrintClientBalance(i);
-		Total += i.AccBalance;
+	case eFifty:
+		return 50;
+	case eOneHundred:
+		return 100;
+	case eTwoHundred:
+		return 200;
+	case eFourHundred:
+		return 400;
+	case eSixHundred:
+		return 600;
+	case eEightHundred:
+		return 800;
+	case eOneThousand:
+		return 1000;
+	case eTwoThousand:
+		return 2000;
 	}
-	cout << "________________________________________________________________________________\n"
-		<< endl;
-	cout << "\t\t\t" << "Total Balances = " << Total << "\n\n";
 }
 
-void TransactionsMenu(vector <stClient>& vClient)
+void QuickTransactionsMenu(vector <stClient>& vClients)
 {
-	enTransactionMenuOptions UserChoice = enTransactionMenuOptions::mainMenu;
+	enQuickTransactionMenu UserChoice = enQuickTransactionMenu::Exit;
 	do
 	{
-		ShowTransactionsMenu();
-		UserChoice = (enTransactionMenuOptions)ReadNumberInRange(1, 4, "Choose what do you want to do ? [1 to 4 ] : ");
-		if (UserChoice == enTransactionMenuOptions::mainMenu)
-		{
-			break;
-		}
 		system("cls");
-		switch (UserChoice)
+		ShowQuickTransactionsMenu();
+		printf("\nYour balance is %.f ", loggedClient.AccBalance);
+		UserChoice = (enQuickTransactionMenu)ReadNumberInRange(1, 9, "Choose what to Withdraw from [1 to 8 ] : ");
+		if (GetQuickTransactionValue(UserChoice) > loggedClient.AccBalance)
 		{
-		case eDeposit:
-			MakeTransaction(vClient, enTransactionType::DepositType);
-			break;
-		case eWithDraw:
-			MakeTransaction(vClient, enTransactionType::WithDrawType);
-			break;
-		case eTotalBalance:
-			PrintBalancesList(vClient);
-			break;
+			cout << "\n\nThe amount exceeds balance, make another choice.\n";
+			GoBackToMenu("\npress any key to continue...");
 		}
-		GoBackToMenu("\n\nPress any key to go back to Transactions Menu.....");
-	} while (UserChoice != mainMenu);
+	} while (GetQuickTransactionValue(UserChoice) > loggedClient.AccBalance);
+	if (ConfirmAction("\n\nAre you sure you want to perform this transaction ? y/n ? "))
+	{
+		loggedClient.AccBalance -= GetQuickTransactionValue(UserChoice);
+		UpdateClient(vClients);
+		cout << "\nDone Successfully , New Balance = " << loggedClient.AccBalance << endl;
+	}
 }
 
 // login screen 
-
 
 void ResetScreen(string Message)
 {
@@ -532,7 +350,7 @@ stClient ReadLoginData(stClient& Client)
 {
 	printf("Enter Account Number ? ");
 	getline(cin >> ws, Client.AccNumber);
-	printf("Enter pin code ? ");
+	printf("Enter pin ? ");
 	getline(cin >> ws, Client.PinCode);
 	return Client;
 }
@@ -546,14 +364,20 @@ stClient Login(vector <stClient>& vClients)
 	{
 		ResetScreen("\t\tLogin Screen");
 		if (Client.PinCode != Input.PinCode)
-			cout << "Invalid UserName/Password!\n";
+			cout << "Invalid Account Number/Pin!\n";
 		ReadLoginData(Input);
 		FindClient(Client, Input.AccNumber, vClients);
 	} while (Client.PinCode != Input.PinCode);
 	return Client;
 }
 
+// balance
 
+void CheckBalance()
+{
+	ScreenHeader("\t\tCheck Balance Screen");
+	printf("Your Balance is %.f\n", loggedClient.AccBalance);
+}
 
 //main menu
 
@@ -564,38 +388,29 @@ void MainMenu(vector <stClient>& vClients)
 	do
 	{
 		ShowMainMenu();
-		UserChoice = (enMainMenuOptions)ReadNumberInRange(1, 8, "Choose what do you want to do ? [1 to 8 ] : ");
+		UserChoice = (enMainMenuOptions)ReadNumberInRange(1, 5, "Choose what do you want to do ? [1 to 5 ] : ");
 		system("cls");
 		switch (UserChoice)
 		{
-		case ShowList:
-			PrintClientsList(vClients);
-
+		case eQuickWithdraw:
+			QuickTransactionsMenu(vClients);
 			break;
-		case Add:
-			AddClients(vClients);
-
+		case eNormalWithdraw:
+			MakeTransaction(vClients, NormalWithDrawType);
 			break;
-		case Delete:
-			DeleteClient(vClients);
-
+		case eMainDeposit:
+			MakeTransaction(vClients, DepositType);
 			break;
-		case Update:
-			UpdateClient(vClients);
-
-			break;
-		case Find:
-			FindClientResult(vClients);
-
-			break;
-		case TransActions:
-			TransactionsMenu(vClients);
+		case eCheckBalnce:
+			CheckBalance();
 			break;
 		case LogOut:
 			loggedClient = Login(vClients);
 			break;
 		}
-		if ((UserChoice != TransActions && UserChoice != LogOut))
+
+
+		if ((UserChoice != LogOut))
 			GoBackToMenu("\n\nPress any key to go back to main Menu.....");
 	} while (true);
 }
