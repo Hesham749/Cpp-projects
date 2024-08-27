@@ -81,6 +81,7 @@ int main()
 {
 	clsCalcualtor Calculator1;
 
+	Calculator1.PrintResult();
 
 	Calculator1.Add(40);
 	Calculator1.PrintResult();
