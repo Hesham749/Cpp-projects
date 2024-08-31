@@ -20,14 +20,11 @@ public:
 		_Value = Value;
 	}
 
-	string GetValue()
+	string Value()
 	{
 		return _Value;
 	}
 
-	__declspec(property (get = GetValue, put = SetValue)) string Value;
-
 
 
 };
-

@@ -5,7 +5,6 @@
 int main()
 {
     clsString string1;
-    string1.Value = "hesham";
-    cout << string1.Value << endl;
+    string1.SetValue("hesham");
+    cout << string1.Value() << endl;
 }
-
