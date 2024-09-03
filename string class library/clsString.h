@@ -7,10 +7,7 @@ using namespace std;
 class clsString
 {
 	string _Value;
-	enum _enWhatToCount
-	{
-		smallLetters, CapitalLetters, All
-	};
+	
 
 public:
 	clsString()
@@ -65,6 +62,11 @@ public:
 	{
 		_Value = ToLower(_Value);
 	}
+
+	enum _enWhatToCount
+	{
+		smallLetters, CapitalLetters, All
+	};
 
 	static short CountLetters(string st, _enWhatToCount whatToCount = All)
 	{
