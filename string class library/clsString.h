@@ -1,10 +1,16 @@
 #pragma once
 #include <iostream>
+#include <string>
+#include <vector>
 using namespace std;
 
 class clsString
 {
 	string _Value;
+	enum _enWhatToCount
+	{
+		smallLetters, CapitalLetters, All
+	};
 
 public:
 	clsString()
@@ -55,7 +61,61 @@ public:
 		_Value = ToLower(_Value);
 	}
 
-	static short LetterCount(string st, char letter, bool CaseSensitive = true)
+
+
+	static short CountLetters(string st, _enWhatToCount whatToCount = All)
+	{
+		short counter = 0;
+		for (int i = 0; i < (int)st.length(); i++)
+		{
+			if (!ispunct(st[i]) && st[i] != ' ')
+			{
+				if (whatToCount == CapitalLetters)
+				{
+					if (st[i] == toupper(st[i]))
+						counter++;
+				}
+
+				else if (whatToCount == smallLetters)
+				{
+					if (st[i] == tolower(st[i]))
+						counter++;
+				}
+				else
+				{
+					counter++;
+				}
+			}
+		}
+		return counter;
+	}
+
+	short CountLetters(_enWhatToCount whatToCount = All)
+	{
+		return CountLetters(_Value, whatToCount);
+	}
+
+	static short CountCapitalLetters(string st)
+	{
+		return CountLetters(st, CapitalLetters);
+	}
+
+	short CountCapitalLetters()
+	{
+		return CountCapitalLetters(_Value);
+	}
+
+	static short CountSmallLetters(string st)
+	{
+		return CountLetters(st, smallLetters);
+	}
+
+	short CountSmallLetters()
+	{
+		return CountSmallLetters(_Value);
+	}
+
+	static short CountSpecificLetter(string st, char letter, bool CaseSensitive = true)
 	{
 		short counter = 0;
 		for (int i = 0; i < (int)st.length(); i++)
@@ -74,9 +134,9 @@ public:
 		return counter;
 	}
 
-	short LetterCount(char letter, bool CaseSensitive = true)
+	short CountSpecificLetter(char letter, bool CaseSensitive = true)
 	{
-		return LetterCount(_Value, letter, CaseSensitive);
+		return CountSpecificLetter(_Value, letter, CaseSensitive);
 	}
 
 	static void PrintWords(string st)
@@ -126,9 +186,20 @@ public:
 		return islower(cr) ? toupper(cr) : tolower(cr);
 	}
 
-	char InvertCharCase()
+	static string InvertAllLettersCase(string st)
 	{
+		for (int i = 0; i < st.length(); i++)
+		{
+			st[i] = InvertCharCase(st[i]);
+		}
+		return st;
 	}
+
+	void InvertAllLettersCase()
+	{
+		InvertAllLettersCase(_Value);
+	}
+
 
 	static bool IsVowel(char letter)
 	{
@@ -136,7 +207,7 @@ public:
 		return letter == 'a' || letter == 'e' || letter == 'i' || letter == 'o' || letter == 'u';
 	};
 
-	static short CountVowel(string st)
+	static short CountVowels(string st)
 	{
 		short counter = 0;
 		for (short i = 0; i < (short)st.size(); i++)
@@ -146,8 +217,76 @@ public:
 		}
 		return counter;
 	}
-	short CountVowel()
+	short CountVowels()
 	{
-		return CountVowel(_Value);
+		return CountVowels(_Value);
 	}
+
+	static vector<string> Split(string st, string delimiter = " ")
+	{
+		bool isFirstLetter = true;
+		vector<string> split;
+		string sWord = "";
+		for (int i = 0; i < st.length(); i++)
+		{
+			if (to_string(st[i]) != delimiter && isFirstLetter)
+			{
+				if (sWord != "")
+					split.push_back(sWord);
+				sWord = "";
+			}
+			isFirstLetter = st[i] == delimiter[0] ? true : false;
+			if (to_string(st[i]) != delimiter)
+				sWord += st[i];
+		}
+		split.push_back(sWord);
+		return split;
+	}
+
+	vector<string> Split(string delimiter = " ")
+	{
+		return Split(_Value, delimiter);
+	}
+
+	static string TrimLeft(string st)
+	{
+		for (short i = 0; i < st.length(); i++)
+		{
+			if (st[i] != ' ')
+				return st.substr(i);
+		}
+		return "";
+	}
+
+	void TrimLeft()
+	{
+		TrimLeft(_Value);
+	}
+
+	static string TrimRight(string st)
+	{
+		for (short i = st.length() - 1; i >= 0; i--)
+		{
+			if (st[i] != ' ')
+				return st.substr(0, i + 1);
+		}
+		return "";
+	}
+
+	void TrimRight()
+	{
+		TrimLeft(_Value);
+	}
+
+	static string Trim(string st)
+	{
+		return TrimLeft(TrimRight(st));
+	}
+
+	void Trim()
+	{
+		_Value = Trim(_Value);
+	}
+
+
 };
