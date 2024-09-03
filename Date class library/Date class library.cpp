@@ -1,20 +1,24 @@
-// Date class library.cpp : This file contains the 'main' function. Program execution begins and ends there.
-//
+
 
 #include <iostream>
+#include "clsDate.h"
+using namespace std;
 
 int main()
 {
-    std::cout << "Hello World!\n";
+	clsDate Date1;
+	clsDate Date2(31, 10, 2022);
+	clsDate Date3("31/1/2026");
+	clsDate Date4(250, 2022);
+	cout << Date1.Print() << endl;
+	cout << Date2.Print() << endl;
+	cout << Date3.Print() << endl;
+	cout << Date4.Print() << endl;
+	cout << Date3.IsValidDate() << endl;
+	cout << Date1.GetDay()<<endl;
+	cout << Date1.DayShortName() << endl;
+	Date1.IncreaseDateByXDays(3);
+	clsDate::IncreaseDateByXDays(Date1, 3);
+	cout << Date1.Print() << endl;
 }
 
-// Run program: Ctrl + F5 or Debug > Start Without Debugging menu
-// Debug program: F5 or Debug > Start Debugging menu
-
-// Tips for Getting Started: 
-//   1. Use the Solution Explorer window to add/manage files
-//   2. Use the Team Explorer window to connect to source control
-//   3. Use the Output window to see build output and other messages
-//   4. Use the Error List window to view errors
-//   5. Go to Project > Add New Item to create new code files, or Project > Add Existing Item to add existing code files to the project
-//   6. In the future, to open this project again, go to File > Open > Project and select the .sln file
