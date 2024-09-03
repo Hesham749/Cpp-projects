@@ -9,6 +9,8 @@ int main()
     cout<<clsString::ToUpper("hesham")<<endl;
     cout << string1.Value() << endl;
     cout << string1.CountCapitalLetters() << endl;
+    string1.ReverseString();
+    cout << string1.Value()<<endl;
     
     
 

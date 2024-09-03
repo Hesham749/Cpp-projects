@@ -33,6 +33,11 @@ public:
 		return _Value;
 	}
 
+	short Length()
+	{
+		return _Value.length();
+	}
+
 	static string ToUpper(string st)
 	{
 		for (int i = 0; i < (int)st.size(); i++)
@@ -60,8 +65,6 @@ public:
 	{
 		_Value = ToLower(_Value);
 	}
-
-
 
 	static short CountLetters(string st, _enWhatToCount whatToCount = All)
 	{
@@ -200,7 +203,6 @@ public:
 		InvertAllLettersCase(_Value);
 	}
 
-
 	static bool IsVowel(char letter)
 	{
 		letter = tolower(letter);
@@ -217,6 +219,7 @@ public:
 		}
 		return counter;
 	}
+
 	short CountVowels()
 	{
 		return CountVowels(_Value);
@@ -288,5 +291,83 @@ public:
 		_Value = Trim(_Value);
 	}
 
+	static string JoinString(vector<string> vstring, string delimiter = " ")
+	{
+		string st = "";
+		for (auto& i : vstring)
+		{
+			st += i + delimiter;
+		}
+		return st.erase(st.length() - delimiter.length());
+	}
 
+	static string JoinString(string arrString[], short length, string delimiter = " ")
+	{
+		string st = "";
+		for (short i = 0; i < length; i++)
+		{
+			st += arrString[i] + delimiter;
+		}
+		return st.erase(st.length() - delimiter.length());
+	}
+
+	static string ReverseString(string st)
+	{
+		string sWord = "", delimiter = " ";
+		short pos = 0;
+		while ((pos = st.find(delimiter)) != string::npos)
+		{
+			sWord = sWord.insert(0, (delimiter + st.substr(0, pos)));
+
+			st.erase(0, pos + delimiter.length());
+		}
+		if (st != "")
+			return sWord.insert(0, st);
+		return sWord;
+	}
+
+	void ReverseString()
+	{
+		_Value = ReverseString(_Value);
+	}
+
+	static string ReplaceWord(string st, string wordToReplace, string newWord, bool matchCase = true)
+	{
+		short pos = 0;
+		string replaced = st;
+		if (!matchCase)
+		{
+			wordToReplace = ToLower(wordToReplace);
+			st = ToLower(st);
+		}
+		while ((pos = st.find(wordToReplace)) != string::npos)
+		{
+			replaced.replace(pos, wordToReplace.length(), newWord);
+			st.replace(pos, wordToReplace.length(), newWord);
+		}
+		return replaced;
+	}
+
+	void  ReplaceWord(string wordToReplace, string newWord, bool matchCase = true)
+	{
+		_Value = ReplaceWord(_Value, wordToReplace, newWord, matchCase);
+	}
+
+	static string RemovePunctuations(string st)
+	{
+		for (short i = 0; i < st.size(); i++)
+		{
+			if (ispunct(st[i]))
+			{
+				st.erase(i, 1);
+				i--;
+			}
+		}
+		return st;
+	}
+
+	void RemovePunctuations()
+	{
+		_Value = RemovePunctuations(_Value);
+	}
 };
