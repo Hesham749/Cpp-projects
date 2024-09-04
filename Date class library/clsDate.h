@@ -49,8 +49,30 @@ class clsDate
 	};
 
 public:
+	clsDate()
+	{
+		time_t _t = time(0);
+		tm* _Now = localtime(&_t);
+		_Year = (_Now->tm_year + 1900);
+		_Month = (_Now->tm_mon + 1);
+		_Day = (_Now->tm_mday);
+	}
 
-	void SetDay(short day)
+	clsDate(short day, short month, short year)
+		:_Year(year), _Month(month), _Day(day)
+	{}
+
+	clsDate(string Date)
+	{
+		*this = _StringToDate(Date);
+	}
+
+	clsDate(short DateOrderInYear, short year)
+	{
+		*this = DateFromDayOrderInYear(DateOrderInYear, year);
+	}
+
+		void SetDay(short day)
 	{
 		_Day = day;
 	}
@@ -80,27 +102,11 @@ public:
 		return _Year;
 	}
 
-	clsDate()
+	static void Swap(clsDate& Date1, clsDate& Date2)
 	{
-		time_t _t = time(0);
-		tm* _Now = localtime(&_t);
-		_Year = (_Now->tm_year + 1900);
-		_Month = (_Now->tm_mon + 1);
-		_Day = (_Now->tm_mday);
-	}
-
-	clsDate(short day, short month, short year)
-		:_Year(year), _Month(month), _Day(day)
-	{}
-
-	clsDate(string Date)
-	{
-		*this = _StringToDate(Date);
-	}
-
-	clsDate(short DateOrderInYear, short year)
-	{
-		*this = DateFromDayOrderInYear(DateOrderInYear, year);
+		clsDate temp = Date1;
+		Date1 = Date2;
+		Date2 = temp;
 	}
 
 	static string Print(clsDate Date, string Seperator = "/")
@@ -719,4 +725,3 @@ public:
 	}
 
 };
-
