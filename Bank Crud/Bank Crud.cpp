@@ -5,7 +5,7 @@
 #include <iomanip>
 using namespace std;
 
-const string fileNmae = "clients.txt";
+const string fileName = "clients.txt";
 
 enum MainMenuOptions
 {
@@ -402,5 +402,5 @@ void StartProgram(string FileName)
 
 int main()
 {
-	StartProgram(fileNmae);
+	StartProgram(fileName);
 }

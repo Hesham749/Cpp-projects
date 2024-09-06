@@ -7,7 +7,7 @@ using namespace std;
 class clsString
 {
 	string _Value;
-	
+
 
 public:
 	clsString()
@@ -227,26 +227,23 @@ public:
 		return CountVowels(_Value);
 	}
 
-	static vector<string> Split(string st, string delimiter = " ")
-	{
-		bool isFirstLetter = true;
-		vector<string> split;
-		string sWord = "";
-		for (int i = 0; i < st.length(); i++)
-		{
-			if (to_string(st[i]) != delimiter && isFirstLetter)
-			{
-				if (sWord != "")
-					split.push_back(sWord);
-				sWord = "";
-			}
-			isFirstLetter = st[i] == delimiter[0] ? true : false;
-			if (to_string(st[i]) != delimiter)
-				sWord += st[i];
-		}
-		split.push_back(sWord);
-		return split;
-	}
+    static vector<string> Split(string S1, string Delim)
+    {
+        vector<string> vString;
+        short pos = 0;
+        string sWord;
+        while ((pos = S1.find(Delim)) != std::string::npos)
+        {
+            sWord = S1.substr(0, pos);
+                vString.push_back(sWord);
+            S1.erase(0, pos + Delim.length());
+        }
+        if (S1 != "")
+        {
+            vString.push_back(S1);
+        }
+        return vString;
+    }
 
 	vector<string> Split(string delimiter = " ")
 	{
