@@ -252,7 +252,7 @@ public:
 		}
 	}
 
-	string NumberToText(int number)
+	static string NumberToText(int number)
 	{
 
 		if (number >= 0 && number <= 19)

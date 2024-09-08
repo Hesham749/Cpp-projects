@@ -42,7 +42,7 @@ class clsBankClient : public clsPerson
 		ClientRecord += Client.Phone + Seperator;
 		ClientRecord += Client.AccountNumber() + Seperator;
 		ClientRecord += Client.PinCode + Seperator;
-		ClientRecord += to_string(Client.Balance);
+		ClientRecord += to_string(Client.AccountBalance);
 		return ClientRecord;
 	}
 
@@ -131,7 +131,7 @@ public:
 		return _Balance;
 	}
 
-	__declspec(property(get = GetBalance, put = SetBalance)) double Balance;
+	__declspec(property(get = GetBalance, put = SetBalance)) double AccountBalance;
 
 	void  Print()
 	{
@@ -259,7 +259,7 @@ public:
 		vector <clsBankClient> Clients = GetClientsList();
 		for (auto& C : Clients)
 		{
-			total += C.Balance;
+			total += C.AccountBalance;
 		}
 		return total;
 	}
