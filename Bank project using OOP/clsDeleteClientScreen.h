@@ -3,7 +3,6 @@
 #include "clsScreen.h"
 #include "clsBankClient.h"
 #include "clsInputValidate.h"
-#include <iomanip>
 
 class clsDeleteClientScreen :protected clsScreen
 {

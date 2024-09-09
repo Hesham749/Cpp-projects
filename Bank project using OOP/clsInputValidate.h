@@ -41,6 +41,16 @@ public:
 		return (int)ReadDblNumber(ErrorMessage);
 	}
 
+	static float ReadFloatNumber(string ErrorMessage = "Invalid Number, Enter again:\n")
+	{
+		return (float)ReadDblNumber(ErrorMessage);
+	}
+
+	static short ReadShortNumber(string ErrorMessage = "Invalid Number, Enter again:\n")
+	{
+		return (short)ReadDblNumber(ErrorMessage);
+	}
+
 	static double ReadDblNumber(string ErrorMessage = "Invalid Number, Enter again:\n")
 	{
 		double Num = 0;
@@ -52,6 +62,7 @@ public:
 		}
 		return Num;
 	}
+
 
 	static int ReadIntNumberBetween(int from, int to, string ErrorMessage = "Number is not within range, enter again:\n")
 	{
