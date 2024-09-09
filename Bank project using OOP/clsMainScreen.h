@@ -85,31 +85,26 @@ private:
 		{
 
 			_ShowAllClientsScreen();
-			_GoBackToMainMenu();
 			break;
 		}
 		case enMainMenuOptions::eAddNewClient:
 
 			_ShowAddNewClientsScreen();
-			_GoBackToMainMenu();
 			break;
 
 		case enMainMenuOptions::eDeleteClient:
 
 			_ShowDeleteClientScreen();
-			_GoBackToMainMenu();
 			break;
 
 		case enMainMenuOptions::eUpdateClient:
 
 			_ShowUpdateClientScreen();
-			_GoBackToMainMenu();
 			break;
 
 		case enMainMenuOptions::eFindClient:
 
 			_ShowFindClientScreen();
-			_GoBackToMainMenu();
 			break;
 
 		case enMainMenuOptions::eShowTransactionsMenu:
@@ -129,6 +124,8 @@ private:
 
 			break;
 		}
+		if (MainMenuOption != eExit && MainMenuOption != eManageUsers && MainMenuOption != eShowTransactionsMenu)
+			_GoBackToMainMenu();
 
 	}
 
