@@ -6,61 +6,130 @@ using namespace std;
 
 class clsMainScreen : protected clsScreen
 {
-	enum enMainMenuOptions
-	{
-		ShowList = 1,
-		Add,
-		Delete,
-		Update,
-		Find,
-		TransActions,
-		ManageUsers,
-		LogOut
+private:
+	enum enMainMenuOptions {
+		eListClients = 1, eAddNewClient = 2, eDeleteClient = 3,
+		eUpdateClient = 4, eFindClient = 5, eShowTransactionsMenu = 6,
+		eManageUsers = 7, eExit = 8
 	};
 
-	static short ReadMainMenuOption()
+	static short _ReadMainMenuOption()
 	{
-		cout << "Choose what do you want to do ? [1 to 8 ] : ";
-		return clsInputValidate::ReadShortNumberBetween(1, 8);
+		cout << "Choose what do you want to do? [1 to 8]? ";
+		short Choice = clsInputValidate::ReadShortNumberBetween(1, 8, "Enter Number between 1 to 8? ");
+		return Choice;
 	}
 
-	static void _PerformMainMenuOption(enMainMenuOptions MainMenuOption)
+	static  void _GoBackToMainMenu()
 	{
-		do
+		cout << "\nPress any key to go back to Main Menu...\n";
+
+		system("pause>0");
+		ShowMainMenu();
+	}
+
+	static void _ShowAllClientsScreen()
+	{
+		cout << "\nClient List Screen Will be here...\n";
+
+	}
+
+	static void _ShowAddNewClientsScreen()
+	{
+		cout << "\nAdd New Client Screen Will be here...\n";
+
+	}
+
+	static void _ShowDeleteClientScreen()
+	{
+		cout << "\nDelete Client Screen Will be here...\n";
+
+	}
+
+	static void _ShowUpdateClientScreen()
+	{
+		cout << "\nUpdate Client Screen Will be here...\n";
+
+	}
+
+	static void _ShowFindClientScreen()
+	{
+		cout << "\nFind Client Screen Will be here...\n";
+
+	}
+
+	static void _ShowTransactionsMenu()
+	{
+		cout << "\nTransactions Menu Will be here...\n";
+
+	}
+
+	static void _ShowManageUsersMenu()
+	{
+		cout << "\nUsers Menu Will be here...\n";
+
+	}
+
+	static void _ShowEndScreen()
+	{
+		cout << "\nEnd Screen Will be here...\n";
+
+	}
+
+	static void _PerfromMainMenuOption(enMainMenuOptions MainMenuOption)
+	{
+		system("cls");
+		switch (MainMenuOption)
 		{
-			ShowMainMenu();
-			
-			system("cls");
-			switch (MainMenuOption)
-			{
-			case ShowList:
-				
-				break;
-			case Add:
-				
-				break;
-			case Delete:
-				
-				break;
-			case Update:
-				
-				break;
-			case Find:
-				
-				break;
-			case TransActions:
-				
-				break;
-			case ManageUsers:
-				
-				break;
-			case LogOut:
-				
-				break;
-			}
-			/*if ((MainMenuOption != TransActions && MainMenuOption != ManageUsers && MainMenuOption != LogOut))*/
-				//GoBackToMenu("\n\nPress any key to go back to main Menu.....");
-		} while (true);
+		case enMainMenuOptions::eListClients:
+		{
+
+			_ShowAllClientsScreen();
+			_GoBackToMainMenu();
+			break;
+		}
+		case enMainMenuOptions::eAddNewClient:
+
+			_ShowAddNewClientsScreen();
+			_GoBackToMainMenu();
+			break;
+
+		case enMainMenuOptions::eDeleteClient:
+
+			_ShowDeleteClientScreen();
+			_GoBackToMainMenu();
+			break;
+
+		case enMainMenuOptions::eUpdateClient:
+
+			_ShowUpdateClientScreen();
+			_GoBackToMainMenu();
+			break;
+
+		case enMainMenuOptions::eFindClient:
+
+			_ShowFindClientScreen();
+			_GoBackToMainMenu();
+			break;
+
+		case enMainMenuOptions::eShowTransactionsMenu:
+
+			_ShowTransactionsMenu();
+			break;
+
+		case enMainMenuOptions::eManageUsers:
+
+			_ShowManageUsersMenu();
+			break;
+
+		case enMainMenuOptions::eExit:
+
+			_ShowEndScreen();
+			//Login();
+
+			break;
+		}
+
 	}
 
 public:
@@ -80,7 +149,7 @@ public:
 		cout << "\t[7] Manage Users.\n";
 		cout << "\t[8] Logout.\n";
 		cout << "======================================================\n";
-		_PerformMainMenuOption((enMainMenuOptions)ReadMainMenuOption());
+		_PerfromMainMenuOption((enMainMenuOptions)_ReadMainMenuOption());
 	}
 };
 
