@@ -38,5 +38,11 @@
     <ClInclude Include="clsUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="clsMainScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="clsScreen.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

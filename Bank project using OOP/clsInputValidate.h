@@ -58,6 +58,11 @@ public:
 		return (int)ReadDblNumberBetween((double)from, (double)to, ErrorMessage);
 	}
 
+	static short ReadShortNumberBetween(short from, short to, string ErrorMessage = "Number is not within range, enter again:\n")
+	{
+		return (short)ReadDblNumberBetween((double)from, (double)to, ErrorMessage);
+	}
+
 	static double ReadDblNumberBetween(double from, double to, string ErrorMessage = "Number is not within range, enter again:\n")
 	{
 		double Num;
@@ -66,6 +71,11 @@ public:
 			cout << ErrorMessage;
 		}
 		return Num;
+	}
+
+	static float ReadFloatNumberBetween(float from, float to, string ErrorMessage = "Number is not within range, enter again:\n")
+	{
+		return (float)ReadDblNumberBetween((double)from, (double)to, ErrorMessage);
 	}
 
 	static bool IsValideDate(clsDate Date)
