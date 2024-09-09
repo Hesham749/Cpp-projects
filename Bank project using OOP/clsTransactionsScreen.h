@@ -54,8 +54,6 @@ class clsTransactionsScreen :protected clsScreen
 		case enTransactionMenuOptions::TotalBalance:
 			_ShowTotalBalanceScreen();
 			break;
-		case enTransactionMenuOptions::MainMenu:
-			break;
 		}
 		if (TransactionsMenuOption != MainMenu)
 			_GoBackToTransactionsMenu();
