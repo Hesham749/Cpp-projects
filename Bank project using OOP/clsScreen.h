@@ -6,13 +6,13 @@ using namespace std;
 class clsScreen
 {
 protected:
-	static void _ScreenHeader(string Title, string SubTitle = "")
+	static void _ScreenHeader(string Title, short tabs = 0, string SubTitle = "")
 	{
 		cout << "______________________________________________________";
-		cout << "\n\n" << clsUtil::Tabs(2) << Title;
+		cout << "\n\n" << clsUtil::Tabs(tabs) << Title;
 		if (SubTitle != "")
 		{
-			cout << "\n" << clsUtil::Tabs(2) << SubTitle;
+			cout << "\n" << clsUtil::Tabs(tabs) << SubTitle;
 		}
 		cout << "\n______________________________________________________\n\n";
 	}

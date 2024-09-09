@@ -2,6 +2,7 @@
 #include <iostream>
 #include "clsScreen.h"
 #include "clsInputValidate.h"
+#include "clsClientsListScreen.h"
 using namespace std;
 
 class clsMainScreen : protected clsScreen
@@ -30,8 +31,7 @@ private:
 
 	static void _ShowAllClientsScreen()
 	{
-		cout << "\nClient List Screen Will be here...\n";
-
+		clsClientsListScreen::ShowClientsList();
 	}
 
 	static void _ShowAddNewClientsScreen()
@@ -133,7 +133,7 @@ public:
 	static void ShowMainMenu()
 	{
 		system("cls");
-		_ScreenHeader("Main Screen");
+		_ScreenHeader("Main Screen",2);
 		cout << "======================================================\n";
 		cout << "\t\tMain Menu Screen\n";
 		cout << "======================================================\n";
