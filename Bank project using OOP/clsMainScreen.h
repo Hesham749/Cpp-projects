@@ -3,6 +3,7 @@
 #include "clsScreen.h"
 #include "clsInputValidate.h"
 #include "clsClientsListScreen.h"
+#include "clsAddNewClientScreen.h"
 using namespace std;
 
 class clsMainScreen : protected clsScreen
@@ -36,8 +37,7 @@ private:
 
 	static void _ShowAddNewClientsScreen()
 	{
-		cout << "\nAdd New Client Screen Will be here...\n";
-
+		clsAddNewClientScreen::ShowAddNewClientScreen();
 	}
 
 	static void _ShowDeleteClientScreen()
@@ -83,12 +83,10 @@ private:
 		{
 		case enMainMenuOptions::eListClients:
 		{
-
 			_ShowAllClientsScreen();
 			break;
 		}
 		case enMainMenuOptions::eAddNewClient:
-
 			_ShowAddNewClientsScreen();
 			break;
 
@@ -133,7 +131,7 @@ public:
 	static void ShowMainMenu()
 	{
 		system("cls");
-		_ScreenHeader("Main Screen",2);
+		_ScreenHeader("Main Screen", 2);
 		cout << "======================================================\n";
 		cout << "\t\tMain Menu Screen\n";
 		cout << "======================================================\n";

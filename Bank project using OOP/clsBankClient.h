@@ -133,21 +133,6 @@ public:
 
 	__declspec(property(get = GetBalance, put = SetBalance)) double AccountBalance;
 
-	void  Print()
-	{
-		cout << "\nClient Card\n";
-		cout << "--------------------------------\n";
-		cout << "First Name     : " << FirstName << endl;
-		cout << "Last Name      : " << LastName << endl;
-		cout << "Full Name      : " << FullName() << endl;
-		cout << "Email          : " << Email << endl;
-		cout << "Phone          : " << Phone << endl;
-		cout << "Account Number : " << _AccountNumber << endl;
-		cout << "PinCode        : " << _PinCode << endl;
-		cout << "Balance        : " << _Balance << endl;
-		cout << "--------------------------------\n";
-	}
-
 	static vector<clsBankClient> GetClientsList(string Seperator = "#//#")
 	{
 		vector<clsBankClient> vAllClients;

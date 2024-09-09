@@ -130,6 +130,7 @@
     <ClCompile Include="Bank project using OOP.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="clsAddNewClientScreen.h" />
     <ClInclude Include="clsBankClient.h" />
     <ClInclude Include="clsClientsListScreen.h" />
     <ClInclude Include="clsDate.h" />
