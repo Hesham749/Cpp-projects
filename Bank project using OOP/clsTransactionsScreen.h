@@ -6,6 +6,8 @@
 #include "clsInputValidate.h"
 #include "clsDepositScreen.h"
 #include "clsWithdrawScreen.h"
+#include "clsTotalBalancesScreen.h"
+
 class clsTransactionsScreen :protected clsScreen
 {
 	enum enTransactionMenuOptions
@@ -38,7 +40,7 @@ class clsTransactionsScreen :protected clsScreen
 
 	static void _ShowTotalBalanceScreen()
 	{
-		cout << "this will be TotalBalance screen" << endl;
+		clsTotalBalancesScreen::ShowTotalBalancesScreen();
 	}
 
 
