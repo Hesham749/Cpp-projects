@@ -5,6 +5,7 @@
 #include "clsBankClient.h"
 #include "clsInputValidate.h"
 #include "clsDepositScreen.h"
+#include "clsWithdrawScreen.h"
 class clsTransactionsScreen :protected clsScreen
 {
 	enum enTransactionMenuOptions
@@ -32,7 +33,7 @@ class clsTransactionsScreen :protected clsScreen
 
 	static void _ShowWithDrawScreen()
 	{
-		cout << "this will be WithDraw screen" << endl;
+		clsWithdrawScreen::ShowWithdrawScreen();
 	}
 
 	static void _ShowTotalBalanceScreen()

@@ -255,10 +255,13 @@ public:
 		Save();
 	}
 
-	void Withdraw(double Amount)
+	bool Withdraw(double Amount)
 	{
+		if (Amount > _Balance)
+			return false;
 		_Balance -= Amount;
 		Save();
+		return true;
 	}
 
 };
