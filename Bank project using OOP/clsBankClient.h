@@ -249,5 +249,17 @@ public:
 		return total;
 	}
 
+	void Deposit(double Amount)
+	{
+		_Balance += Amount;
+		Save();
+	}
+
+	void Withdraw(double Amount)
+	{
+		_Balance -= Amount;
+		Save();
+	}
+
 };
 

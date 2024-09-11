@@ -4,6 +4,7 @@
 #include "clsPerson.h"
 #include "clsBankClient.h"
 #include "clsInputValidate.h"
+#include "clsDepositScreen.h"
 class clsTransactionsScreen :protected clsScreen
 {
 	enum enTransactionMenuOptions
@@ -26,7 +27,7 @@ class clsTransactionsScreen :protected clsScreen
 
 	static void _ShowDepositScreen()
 	{
-		cout << "this will be deposit screen" << endl;
+		clsDepositScreen::ShowDepositScreen();
 	}
 
 	static void _ShowWithDrawScreen()
@@ -63,7 +64,7 @@ public:
 	static void ShowTransactionsMenu()
 	{
 		system("cls");
-		_ScreenHeader("Transactions Screen", 2);
+		("Transactions Screen", 2);
 		cout << "======================================================\n";
 		cout << "\t\tTransactions Menu Screen\n";
 		cout << "======================================================\n";
