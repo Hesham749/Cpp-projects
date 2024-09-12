@@ -2,7 +2,7 @@
 #include "clsPerson.h"
 #include <iostream>
 
-string File = "Users.txt";
+string UsersFile = "Users.txt";
 
 class clsUser :public clsPerson
 {
@@ -45,7 +45,7 @@ class clsUser :public clsPerson
 	static void _AddDataLineToFile(string DataLine)
 	{
 		fstream MyFile;
-		MyFile.open(File, ios::app);
+		MyFile.open(UsersFile, ios::app);
 		if (MyFile.is_open())
 		{
 			MyFile << DataLine << endl;
@@ -56,7 +56,7 @@ class clsUser :public clsPerson
 	void _UpdateFileData(vector<clsUser>& vUsers)
 	{
 		fstream Myfile;
-		Myfile.open(File, ios::out);
+		Myfile.open(UsersFile, ios::out);
 		if (Myfile.is_open())
 		{
 			for (auto& C : vUsers)
@@ -91,9 +91,21 @@ class clsUser :public clsPerson
 
 public:
 	clsUser(enMode Mode, string FirstName, string LastName, string Email, string Phone, string UserName, string Password, short Permissons)
-		: _Mode(Mode), clsPerson(FirstName, LastName, Email, Phone), _UserName(), _Password(Password), _Permissions(Permissons)
+		: _Mode(Mode), clsPerson(FirstName, LastName, Email, Phone), _UserName(UserName), _Password(Password), _Permissions(Permissons)
 	{
 	}
+
+	enum enPermissions
+	{
+		FullAccess = -1,
+		ListAccess = 1,
+		AddAccess = 2,
+		DeleteAccess = 4,
+		UpdateAccess = 8,
+		FindAccess = 16,
+		TransactionsAccess = 32,
+		MangeUsersAccess = 64
+	};
 
 	bool IsEmpty()
 	{
@@ -140,7 +152,7 @@ public:
 	{
 		vector<clsUser> vAllUsers;
 		fstream MyFile;
-		MyFile.open(File, ios::in);
+		MyFile.open(UsersFile, ios::in);
 		if (MyFile.is_open())
 		{
 			string line = "";
@@ -156,7 +168,7 @@ public:
 	static clsUser Find(string UserName)
 	{
 		fstream Myfile;
-		Myfile.open(File, ios::in);
+		Myfile.open(UsersFile, ios::in);
 		if (Myfile.is_open())
 		{
 			string line = "";
@@ -177,7 +189,7 @@ public:
 	static clsUser Find(string UserName, string Password)
 	{
 		fstream Myfile;
-		Myfile.open(File, ios::in);
+		Myfile.open(UsersFile, ios::in);
 		if (Myfile.is_open())
 		{
 			string line = "";

@@ -1,6 +1,7 @@
 #pragma once
 #include "clsScreen.h"
 #include "clsUser.h"
+#include "clsListUsersScreen.h"
 
 class clsManageUsersScreen :protected clsScreen
 {
@@ -26,7 +27,7 @@ class clsManageUsersScreen :protected clsScreen
 
 	static void _ShowListUsersScreen()
 	{
-		cout << "\nList Users Screen Will Be Here.\n";
+		clsListUsersScreen::ShowUsersList();
 
 	}
 
