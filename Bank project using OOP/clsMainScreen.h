@@ -56,7 +56,6 @@ private:
 	static void _ShowFindClientScreen()
 	{
 		clsFindClientScreen::ShowFindClientScreen();
-
 	}
 
 	static void _ShowTransactionsMenu()
@@ -66,14 +65,12 @@ private:
 
 	static void _ShowManageUsersMenu()
 	{
-
 		clsManageUsersScreen::ShowMangeUsersMenu();
 	}
 
 	static void _Logout()
 	{
 		CurrentUser = clsUser::Find("", "");
-
 	}
 
 	static void _MainMenu()
@@ -101,36 +98,38 @@ private:
 		{
 		case enMainMenuOptions::eListClients:
 		{
-			_ShowAllClientsScreen();
+			if (clsScreen::HasPermission(clsUser::ListAccess))
+				_ShowAllClientsScreen();
 			break;
 		}
 		case enMainMenuOptions::eAddNewClient:
-			_ShowAddNewClientsScreen();
+			if (clsScreen::HasPermission(clsUser::AddAccess))
+				_ShowAddNewClientsScreen();
 			break;
 
 		case enMainMenuOptions::eDeleteClient:
-
-			_ShowDeleteClientScreen();
+			if (clsScreen::HasPermission(clsUser::DeleteAccess))
+				_ShowDeleteClientScreen();
 			break;
 
 		case enMainMenuOptions::eUpdateClient:
-
-			_ShowUpdateClientScreen();
+			if (clsScreen::HasPermission(clsUser::UpdateAccess))
+				_ShowUpdateClientScreen();
 			break;
 
 		case enMainMenuOptions::eFindClient:
-
-			_ShowFindClientScreen();
+			if (clsScreen::HasPermission(clsUser::FindAccess))
+				_ShowFindClientScreen();
 			break;
 
 		case enMainMenuOptions::eShowTransactionsMenu:
-
-			_ShowTransactionsMenu();
+			(clsScreen::HasPermission(clsUser::TransactionsAccess)) ?
+				_ShowTransactionsMenu() : _GoBackToMainMenu();
 			break;
 
 		case enMainMenuOptions::eManageUsers:
-
-			_ShowManageUsersMenu();
+			(clsScreen::HasPermission(clsUser::MangeUsersAccess)) ?
+				_ShowManageUsersMenu() : _GoBackToMainMenu();
 			break;
 
 		case enMainMenuOptions::eExit:

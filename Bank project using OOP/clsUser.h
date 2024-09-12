@@ -1,6 +1,7 @@
 #pragma once
 #include "clsPerson.h"
 #include <iostream>
+#include <fstream>
 
 string UsersFile = "Users.txt";
 
