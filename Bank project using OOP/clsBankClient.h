@@ -17,7 +17,7 @@ class clsBankClient : public clsPerson
 	enMode _Mode;
 
 	string
-		_AccountNumber,
+		_UserName,
 		_PinCode;
 	double _Balance;
 	bool _MarkForDelete = false;
@@ -79,7 +79,7 @@ class clsBankClient : public clsPerson
 		vector <clsBankClient> vClients = GetClientsList();
 		for (auto& C : vClients)
 		{
-			if (C.AccountNumber() == _AccountNumber)
+			if (C.AccountNumber() == _UserName)
 			{
 				C = *this;
 				break;
@@ -95,7 +95,7 @@ class clsBankClient : public clsPerson
 
 public:
 	clsBankClient(enMode Mode, string FirstName, string LastName, string Email, string Phone, string AccountNumber, string PinCode, double balance)
-		: _Mode(Mode), clsPerson(FirstName, LastName, Email, Phone), _AccountNumber(AccountNumber), _PinCode(PinCode), _Balance(balance)
+		: _Mode(Mode), clsPerson(FirstName, LastName, Email, Phone), _UserName(AccountNumber), _PinCode(PinCode), _Balance(balance)
 	{
 	}
 
@@ -106,7 +106,7 @@ public:
 
 	string AccountNumber()
 	{
-		return _AccountNumber;
+		return _UserName;
 	}
 
 	void SetPinCode(string PinCode)
@@ -212,7 +212,7 @@ public:
 			_Update();
 			return svSucceeded;
 		case clsBankClient::AddNewMode:
-			if (IsClientExist(_AccountNumber))
+			if (IsClientExist(_UserName))
 				return svFaildAccountNumberExists;
 			else
 			{
@@ -222,7 +222,6 @@ public:
 		default:
 			break;
 		}
-
 	}
 
 	static clsBankClient AddNewClient(string AccountNumber)
@@ -234,7 +233,7 @@ public:
 	{
 		_MarkForDelete = true;
 		_Update();
-		*this = clsBankClient::Find(_AccountNumber);
+		*this = clsBankClient::Find(_UserName);
 		return IsEmpty();
 	}
 
