@@ -4,6 +4,7 @@
 #include "clsPerson.h"
 #include "clsUser.h"
 #include "clsInputValidate.h"
+#include "clsMainScreen.h"
 class clsFindUserScreen :protected clsScreen
 {
 	static void _PrintUser(clsUser& User)
