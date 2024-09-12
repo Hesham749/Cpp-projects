@@ -30,9 +30,7 @@ private:
 	static  void _GoBackToMainMenu()
 	{
 		cout << "\nPress any key to go back to Main Menu...\n";
-
 		system("pause>0");
-		ShowMainMenu();
 	}
 
 	static void _ShowAllClientsScreen()
@@ -78,6 +76,24 @@ private:
 
 	}
 
+	static void _MainMenu()
+	{
+		system("cls");
+		_ScreenHeader("Main Screen", 2);
+		cout << "======================================================\n";
+		cout << "\t\tMain Menu Screen\n";
+		cout << "======================================================\n";
+		cout << "\t[1] Show Clients list.\n";
+		cout << "\t[2] Add New Client.\n";
+		cout << "\t[3] Delete Client.\n";
+		cout << "\t[4] Update Client Info.\n";
+		cout << "\t[5] Find Client.\n";
+		cout << "\t[6] Transactions.\n";
+		cout << "\t[7] Manage Users.\n";
+		cout << "\t[8] Logout.\n";
+		cout << "======================================================\n";
+	}
+
 	static void _PerfromMainMenuOption(enMainMenuOptions MainMenuOption)
 	{
 		system("cls");
@@ -110,13 +126,11 @@ private:
 		case enMainMenuOptions::eShowTransactionsMenu:
 
 			_ShowTransactionsMenu();
-			ShowMainMenu();
 			break;
 
 		case enMainMenuOptions::eManageUsers:
 
 			_ShowManageUsersMenu();
-			ShowMainMenu();
 			break;
 
 		case enMainMenuOptions::eExit:
@@ -125,27 +139,16 @@ private:
 		}
 		if (MainMenuOption != eExit && MainMenuOption != eManageUsers && MainMenuOption != eShowTransactionsMenu)
 			_GoBackToMainMenu();
-
 	}
-
 public:
+
 	static void ShowMainMenu()
 	{
-		system("cls");
-		_ScreenHeader("Main Screen", 2);
-		cout << "======================================================\n";
-		cout << "\t\tMain Menu Screen\n";
-		cout << "======================================================\n";
-		cout << "\t[1] Show Clients list.\n";
-		cout << "\t[2] Add New Client.\n";
-		cout << "\t[3] Delete Client.\n";
-		cout << "\t[4] Update Client Info.\n";
-		cout << "\t[5] Find Client.\n";
-		cout << "\t[6] Transactions.\n";
-		cout << "\t[7] Manage Users.\n";
-		cout << "\t[8] Logout.\n";
-		cout << "======================================================\n";
-		_PerfromMainMenuOption((enMainMenuOptions)_ReadMainMenuOption());
+		enMainMenuOptions MainMenuOption;
+		do {
+			_MainMenu();
+			_PerfromMainMenuOption(MainMenuOption = (enMainMenuOptions)_ReadMainMenuOption());
+		} while (MainMenuOption != eExit);
 	}
 };
 

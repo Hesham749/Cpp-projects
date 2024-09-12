@@ -25,7 +25,6 @@ class clsManageUsersScreen :protected clsScreen
 	{
 		cout << "\n\nPress any key to go back to Manage Users Menu...";
 		system("pause>0");
-		ShowMangeUsersMenu();
 
 	}
 
@@ -57,6 +56,21 @@ class clsManageUsersScreen :protected clsScreen
 		clsFindUserScreen::ShowFindUserScreen();
 	}
 
+	static void _ManageUserMenu()
+	{
+		system("cls");
+		_ScreenHeader("Manage Users Screen", 2);
+		cout << "===========================================\n";
+		cout << "\t\tManage Users Menu\n";
+		cout << "===========================================\n";
+		cout << "\t[1] List Users.\n";
+		cout << "\t[2] Add New User.\n";
+		cout << "\t[3] Delete User.\n";
+		cout << "\t[4] Update User.\n";
+		cout << "\t[5] Find User.\n";
+		cout << "\t[6] Main Menu.\n";
+		cout << "===========================================\n";
+	}
 
 	static void _PerformManageUsersMenuOption(enManageUsersMenuOptions ManageUsersMenueOption)
 	{
@@ -101,22 +115,15 @@ class clsManageUsersScreen :protected clsScreen
 
 
 public:
+
 	static void ShowMangeUsersMenu()
 	{
-		system("cls");
-		_ScreenHeader("Manage Users Screen", 2);
-
-		cout << "===========================================\n";
-		cout << "\t\tManage Users Menu\n";
-		cout << "===========================================\n";
-		cout << "\t[1] List Users.\n";
-		cout << "\t[2] Add New User.\n";
-		cout << "\t[3] Delete User.\n";
-		cout << "\t[4] Update User.\n";
-		cout << "\t[5] Find User.\n";
-		cout << "\t[6] Main Menu.\n";
-		cout << "===========================================\n";
-		_PerformManageUsersMenuOption((enManageUsersMenuOptions)_ReadManageUsersMenuOption());
+		enManageUsersMenuOptions ManageUsersMenueOption;
+		do
+		{
+			_ManageUserMenu();
+			_PerformManageUsersMenuOption(ManageUsersMenueOption = (enManageUsersMenuOptions)_ReadManageUsersMenuOption());
+		} while (ManageUsersMenueOption != eMainMenu);
 	}
 };
 
