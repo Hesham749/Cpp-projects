@@ -278,5 +278,13 @@ public:
 			return NumberToText(number / 1000000) + " Million " + NumberToText(number % 1000000);
 		}
 	}
+
+	static bool ConfirmAction(string message)
+	{
+		cout << message;
+		char confirmed = ' ';
+		cin >> confirmed;
+		return tolower(confirmed) == 'y';
+	}
 };
 

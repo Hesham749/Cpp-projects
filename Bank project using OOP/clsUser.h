@@ -38,7 +38,7 @@ class clsUser :public clsPerson
 		UserRecord += User.Phone + Seperator;
 		UserRecord += User.UserName + Seperator;
 		UserRecord += User.Password + Seperator;
-		UserRecord += to_string(User.AccountPermissons);
+		UserRecord += to_string(User.AccountPermissions);
 		return UserRecord;
 	}
 
@@ -146,7 +146,7 @@ public:
 		return _Permissions;
 	}
 
-	__declspec(property(get = GetPermissons, put = SetPermissons)) short AccountPermissons;
+	__declspec(property(get = GetPermissons, put = SetPermissons)) short AccountPermissions;
 
 	static vector<clsUser> GetUsersList(string Seperator = "#//#")
 	{

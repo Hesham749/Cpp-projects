@@ -2,6 +2,8 @@
 #include "clsScreen.h"
 #include "clsUser.h"
 #include "clsListUsersScreen.h"
+#include "clsAddNewUserScreen.h"
+#include "clsDeleteUserScreen.h"
 
 class clsManageUsersScreen :protected clsScreen
 {
@@ -33,13 +35,13 @@ class clsManageUsersScreen :protected clsScreen
 
 	static void _ShowAddNewUserScreen()
 	{
-		cout << "\nAdd New User Screen Will Be Here.\n";
+		clsAddNewUserScreen::ShowAddNewUserScreen();
 
 	}
 
 	static void _ShowDeleteUserScreen()
 	{
-		cout << "\nDelete User Screen Will Be Here.\n";
+		clsDeleteUserScreen::ShowDeleteUserScreen();
 
 	}
 
