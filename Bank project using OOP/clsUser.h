@@ -38,7 +38,7 @@ class clsUser :public clsPerson
 		UserRecord += User.Phone + Seperator;
 		UserRecord += User.UserName + Seperator;
 		UserRecord += User.Password + Seperator;
-		UserRecord += to_string(User.AccountPermissions);
+		UserRecord += to_string(User.Permissions);
 		return UserRecord;
 	}
 
@@ -90,8 +90,8 @@ class clsUser :public clsPerson
 	}
 
 public:
-	clsUser(enMode Mode, string FirstName, string LastName, string Email, string Phone, string UserName, string Password, short Permissons)
-		: _Mode(Mode), clsPerson(FirstName, LastName, Email, Phone), _UserName(UserName), _Password(Password), _Permissions(Permissons)
+	clsUser(enMode Mode, string FirstName, string LastName, string Email, string Phone, string UserName, string Password, short permissions)
+		: _Mode(Mode), clsPerson(FirstName, LastName, Email, Phone), _UserName(UserName), _Password(Password), _Permissions(permissions)
 	{
 	}
 
@@ -146,7 +146,7 @@ public:
 		return _Permissions;
 	}
 
-	__declspec(property(get = GetPermissons, put = SetPermissons)) short AccountPermissions;
+	__declspec(property(get = GetPermissons, put = SetPermissons)) short Permissions;
 
 	static vector<clsUser> GetUsersList(string Seperator = "#//#")
 	{
@@ -250,6 +250,16 @@ public:
 		_Update();
 		*this = clsUser::Find(_UserName);
 		return IsEmpty();
+	}
+
+	static bool Haspermission(clsUser User, enPermissions Permission)
+	{
+		return (User._Permissions & Permission);
+	}
+
+	bool Haspermission(enPermissions Permission)
+	{
+		return (_Permissions & Permission);
 	}
 };
 

@@ -18,7 +18,7 @@ class clsFindUserScreen :protected clsScreen
 		cout << "\nPhone       : " << User.Phone;
 		cout << "\nUser Name   : " << User.UserName;
 		cout << "\nPassword    : " << User.Password;
-		cout << "\nPermissions : " << User.AccountPermissions;
+		cout << "\nPermissions : " << User.Permissions;
 		cout << "\n___________________\n";
 	}
 

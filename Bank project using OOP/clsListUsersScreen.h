@@ -14,7 +14,7 @@ class clsListUsersScreen : protected clsScreen
 		cout << "| " << setw(12) << left << User.Phone;
 		cout << "| " << setw(20) << left << User.Email;
 		cout << "| " << setw(10) << left << User.Password;
-		cout << "| " << setw(12) << left << User.AccountPermissions;
+		cout << "| " << setw(12) << left << User.Permissions;
 
 	}
 

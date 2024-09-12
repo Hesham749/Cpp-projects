@@ -47,7 +47,7 @@ class clsUpdateUserScreen :protected clsScreen
 		User.Password = clsInputValidate::ReadString();
 
 		cout << "\nEnter Account Permissions: ";
-		User.AccountPermissions = _ReadUserPermissions();
+		User.Permissions = _ReadUserPermissions();
 	}
 
 	static void _PrintUser(clsUser& User)
@@ -61,7 +61,7 @@ class clsUpdateUserScreen :protected clsScreen
 		cout << "\nPhone       : " << User.Phone;
 		cout << "\nUser Name   : " << User.UserName;
 		cout << "\nPassword    : " << User.Password;
-		cout << "\nPermissions : " << User.AccountPermissions;
+		cout << "\nPermissions : " << User.Permissions;
 		cout << "\n___________________\n";
 	}
 
