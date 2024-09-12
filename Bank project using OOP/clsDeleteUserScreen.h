@@ -38,12 +38,7 @@ public:	static void ShowDeleteUserScreen()
 		clsUser User1 = clsUser::Find(UserName);
 		_PrintUser(User1);
 
-		cout << "\nAre you sure you want to delete this User y/n? ";
-
-		char Answer = 'n';
-		cin >> Answer;
-
-		if (Answer == 'y' || Answer == 'Y')
+		if (clsUtil::ConfirmAction("\nAre you sure you want to delete this User y/n? "))
 		{
 
 
