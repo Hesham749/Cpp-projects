@@ -16,9 +16,9 @@ class clsMainScreen : protected clsScreen
 {
 private:
 	enum enMainMenuOptions {
-		eListClients = 1, eAddNewClient = 2, eDeleteClient = 3,
-		eUpdateClient = 4, eFindClient = 5, eShowTransactionsMenu = 6,
-		eManageUsers = 7, eExit = 8
+		eListClients = 1, eAddNewClient, eDeleteClient,
+		eUpdateClient, eFindClient, eShowTransactionsMenu,
+		eManageUsers, eLoginRegisterScreen, eExit
 	};
 
 	static short _ReadMainMenuOption()
@@ -66,6 +66,11 @@ private:
 	static void _ShowManageUsersMenu()
 	{
 		clsManageUsersScreen::ShowMangeUsersMenu();
+	}
+
+	static void _showLoginRegisterScreen()
+	{
+
 	}
 
 	static void _Logout()

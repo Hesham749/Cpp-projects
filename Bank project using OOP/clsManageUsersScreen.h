@@ -6,18 +6,19 @@
 #include "clsDeleteUserScreen.h"
 #include "clsUpdateUserScreen.h"
 #include "clsFindUserScreen.h"
+#include "clsLoginRegisterScreen.h"
 
 class clsManageUsersScreen :protected clsScreen
 {
 	enum enManageUsersMenuOptions {
-		eListUsers = 1, eAddNewUser = 2, eDeleteUser = 3,
-		eUpdateUser = 4, eFindUser = 5, eMainMenu = 6
+		eListUsers = 1, eAddNewUser, eDeleteUser,
+		eUpdateUser, eFindUser, eLoginRegisterScreen, eMainMenu
 	};
 
 	static short _ReadManageUsersMenuOption()
 	{
-		cout << "Choose what do you want to do? [1 to 6]? ";
-		short Choice = clsInputValidate::ReadShortNumberBetween(1, 6, "Enter Number between 1 to 6? ");
+		cout << "Choose what do you want to do? [1 to 7]? ";
+		short Choice = clsInputValidate::ReadShortNumberBetween(1, 7, "Enter Number between 1 to 7? ");
 		return Choice;
 	}
 
@@ -56,6 +57,11 @@ class clsManageUsersScreen :protected clsScreen
 		clsFindUserScreen::ShowFindUserScreen();
 	}
 
+	static void _showLoginRegisterScreen()
+	{
+		clsLoginRegisterScreen::ShowLoginRegisterScreen();
+	}
+
 	static void _ManageUserMenu()
 	{
 		system("cls");
@@ -68,7 +74,8 @@ class clsManageUsersScreen :protected clsScreen
 		cout << "\t[3] Delete User.\n";
 		cout << "\t[4] Update User.\n";
 		cout << "\t[5] Find User.\n";
-		cout << "\t[6] Main Menu.\n";
+		cout << "\t[6] Login Register List.\n";
+		cout << "\t[7] Main Menu.\n";
 		cout << "===========================================\n";
 	}
 
@@ -107,6 +114,9 @@ class clsManageUsersScreen :protected clsScreen
 			_ShowFindUserScreen();
 			break;
 		}
+		case enManageUsersMenuOptions::eLoginRegisterScreen:
+			_showLoginRegisterScreen();
+			break;
 		}
 
 		if (ManageUsersMenueOption != enManageUsersMenuOptions::eMainMenu)

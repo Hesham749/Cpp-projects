@@ -2,6 +2,7 @@
 #include "clsPerson.h"
 #include <iostream>
 #include <fstream>
+#include <vector>
 
 const string UsersFile = "Users.txt";
 const string RegisterFile = "LoginRegister.txt";
@@ -90,7 +91,7 @@ class clsUser :public clsPerson
 		_AddDataLineToFile(_UserToLine(*this), UsersFile);
 	}
 
-	string _LoginRecord(string Seperator = "#//#")
+	string _LoginRecordToLine(string Seperator = "#//#")
 	{
 		string UserRecord = "";
 		UserRecord += clsDate::GetSystemDateTimeString() + Seperator;
@@ -98,6 +99,21 @@ class clsUser :public clsPerson
 		UserRecord += _Password + Seperator;
 		UserRecord += to_string(_Permissions);
 		return UserRecord;
+	}
+
+	struct stLoginRegisterRecord;
+	 static stLoginRegisterRecord _LineToLoginRecord(string Line, string Seperator = "#//#")
+	{
+		stLoginRegisterRecord LoginRegisterRecord;
+
+		vector <string> LoginRegisterDataLine = clsString::Split(Line, Seperator);
+		LoginRegisterRecord.DateTime = LoginRegisterDataLine[0];
+		LoginRegisterRecord.UserName = LoginRegisterDataLine[1];
+		LoginRegisterRecord.Password = LoginRegisterDataLine[2];
+		LoginRegisterRecord.Permissions = stoi(LoginRegisterDataLine[3]);
+
+		return LoginRegisterRecord;
+
 	}
 
 public:
@@ -116,6 +132,14 @@ public:
 		FindAccess = 16,
 		TransactionsAccess = 32,
 		MangeUsersAccess = 64
+	};
+
+	struct stLoginRegisterRecord
+	{
+		string DateTime;
+		string UserName;
+		string Password;
+		short Permissions;
 	};
 
 	bool IsEmpty()
@@ -174,6 +198,23 @@ public:
 			MyFile.close();
 		}
 		return vAllUsers;
+	}
+
+	static vector <stLoginRegisterRecord> GetLoginRegisterList(string Seperator = "#//#")
+	{
+		vector<stLoginRegisterRecord> vAllRegisters;
+		fstream MyFile;
+		MyFile.open(RegisterFile, ios::in);
+		if (MyFile.is_open())
+		{
+			string line = "";
+			while (getline(MyFile, line))
+			{
+				vAllRegisters.push_back(_LineToLoginRecord(line));
+			}
+			MyFile.close();
+		}
+		return vAllRegisters;
 	}
 
 	static clsUser Find(string UserName)
@@ -275,7 +316,7 @@ public:
 
 	void RegisterLogin()
 	{
-		_AddDataLineToFile(_LoginRecord(), RegisterFile);
+		_AddDataLineToFile(_LoginRecordToLine(), RegisterFile);
 	}
 };
 
