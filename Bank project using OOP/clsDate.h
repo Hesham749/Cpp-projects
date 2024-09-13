@@ -458,20 +458,9 @@ public:
 		return DifferenceBetween2DatesInDays(*this, Date2, IncludeEndDay);
 	}
 
-	static clsDate GetCurrentDate()
-	{
-		clsDate CurrentDate;
-		time_t t = time(0);
-		tm* Now = localtime(&t);
-		CurrentDate._Year = Now->tm_year + 1900;
-		CurrentDate._Month = Now->tm_mon + 1;
-		CurrentDate._Day = Now->tm_mday;
-		return CurrentDate;
-	}
-
 	static short AgeInDays(clsDate DateOfBirth)
 	{
-		return DifferenceBetween2DatesInDays(DateOfBirth, GetCurrentDate(), true);
+		return DifferenceBetween2DatesInDays(DateOfBirth, clsDate(), true);
 	}
 
 	short AgeInDays()
