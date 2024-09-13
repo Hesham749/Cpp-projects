@@ -4,8 +4,7 @@ int main()
 
 {
 
-	while (true)
-		clsLoginScreen::ShowLoginScreen();
+	while (clsLoginScreen::ShowLoginScreen());
 
 
 	system("pause>0");
