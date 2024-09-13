@@ -33,6 +33,7 @@ class clsLoginScreen :protected::clsScreen
 			string Password = clsInputValidate::ReadString();
 			CurrentUser = clsUser::Find(UserName, Password);
 		} while (LoginFailed = CurrentUser.IsEmpty());
+		CurrentUser.RegisterLogin();
 		clsMainScreen::ShowMainMenu();
 		return  true;
 	}

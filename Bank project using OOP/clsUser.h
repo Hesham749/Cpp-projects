@@ -3,8 +3,8 @@
 #include <iostream>
 #include <fstream>
 
-string UsersFile = "Users.txt";
-
+const string UsersFile = "Users.txt";
+const string RegisterFile = "LoginRegister.txt";
 class clsUser :public clsPerson
 {
 	enum enMode
@@ -43,10 +43,10 @@ class clsUser :public clsPerson
 		return UserRecord;
 	}
 
-	static void _AddDataLineToFile(string DataLine)
+	static void _AddDataLineToFile(string DataLine, string File)
 	{
 		fstream MyFile;
-		MyFile.open(UsersFile, ios::app);
+		MyFile.open(File, ios::app);
 		if (MyFile.is_open())
 		{
 			MyFile << DataLine << endl;
@@ -87,7 +87,17 @@ class clsUser :public clsPerson
 
 	void _AddNew()
 	{
-		_AddDataLineToFile(_UserToLine(*this));
+		_AddDataLineToFile(_UserToLine(*this), UsersFile);
+	}
+
+	string _LoginRecord(string Seperator = "#//#")
+	{
+		string UserRecord = "";
+		UserRecord += clsDate::GetSystemDateTimeString() + Seperator;
+		UserRecord += _UserName + Seperator;
+		UserRecord += _Password + Seperator;
+		UserRecord += to_string(_Permissions);
+		return UserRecord;
 	}
 
 public:
@@ -261,6 +271,11 @@ public:
 	bool Haspermission(enPermissions Permission)
 	{
 		return (_Permissions & Permission);
+	}
+
+	void RegisterLogin()
+	{
+		_AddDataLineToFile(_LoginRecord(), RegisterFile);
 	}
 };
 

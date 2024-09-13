@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include <string>
+#include <fstream>
 #include "clsDate.h"
 using namespace std;
 
@@ -243,6 +244,7 @@ public:
 			text[i] = (char)((int)text[i]) + encryptionKey;
 		}
 	}
+
 	static void Decryption(string& text, short encryptionKey)
 	{
 		for (int i = 0; i < (int)text.length(); i++)
