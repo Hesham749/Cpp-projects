@@ -263,5 +263,15 @@ public:
 		return true;
 	}
 
+	bool Transfer(clsBankClient& ToClient, double Amount)
+	{
+		if (Amount > _Balance)
+			return false;
+		_Balance -= Amount;
+		Save();
+		ToClient.AccountBalance += Amount;
+		ToClient.Save();
+		return true;
+	}
 };
 

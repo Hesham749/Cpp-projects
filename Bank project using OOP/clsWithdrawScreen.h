@@ -41,10 +41,7 @@ class clsWithdrawScreen :protected clsScreen
 			cout << "\nPlease enter deposit amount? ";
 			Amount = clsInputValidate::ReadDblNumber();
 
-			cout << "\nAre you sure you want to perform this transaction? ";
-			char Answer = 'n';
-			cin >> Answer;
-			if (Answer == 'Y' || Answer == 'y')
+			if (clsUtil::ConfirmAction("\nAre you sure you want to perform this transaction? "))
 			{
 				if (Client1.Withdraw(Amount))
 				{
