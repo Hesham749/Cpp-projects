@@ -38,7 +38,7 @@ public:
         cout << "_________________________________________\n" << endl;
 
         if (vLoginRegisterRecord.size() == 0)
-            cout << "No Logins Available In the System!";
+            cout << "\t\t\t\tNo Logins Available In the System!";
         else
 
             for (clsUser::stLoginRegisterRecord Record : vLoginRegisterRecord)
