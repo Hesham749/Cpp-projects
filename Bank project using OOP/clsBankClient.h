@@ -265,12 +265,9 @@ public:
 
 	bool Transfer(clsBankClient& ToClient, double Amount)
 	{
-		if (Amount > _Balance)
+		if (!Withdraw(Amount))
 			return false;
-		_Balance -= Amount;
-		Save();
-		ToClient.AccountBalance += Amount;
-		ToClient.Save();
+		ToClient.Deposit(Amount);
 		return true;
 	}
 };
