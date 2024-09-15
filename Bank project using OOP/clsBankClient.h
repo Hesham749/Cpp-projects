@@ -4,9 +4,11 @@
 #include <fstream>
 #include "clsPerson.h"
 #include "clsString.h"
+
 using namespace std;
 
-string File = "Clients.txt";
+string ClientsFile = "Clients.txt";
+string TransferFile = "TransferLog.txt";
 
 class clsBankClient : public clsPerson
 {
@@ -46,7 +48,44 @@ class clsBankClient : public clsPerson
 		return ClientRecord;
 	}
 
-	static void _AddDataLineToFile(string DataLine)
+	struct stTransferLogRecord
+	{
+		string DateTime,
+			FromClient,
+			ToClient;
+		double Amount,
+			FromBalance,
+			ToBalance;
+		string User;
+	};
+
+	static stTransferLogRecord _LineToTransferRecord(string Line, string Seperator = "#//#")
+	{
+		stTransferLogRecord TransferLogRecord;
+		vector <string> vTransferLogLine = clsString::Split(Line, Seperator);
+		TransferLogRecord.DateTime = vTransferLogLine[0];
+		TransferLogRecord.FromClient = vTransferLogLine[1];
+		TransferLogRecord.ToClient = vTransferLogLine[2];
+		TransferLogRecord.Amount = stod(vTransferLogLine[3]);
+		TransferLogRecord.FromBalance = stod(vTransferLogLine[3]);
+		TransferLogRecord.ToBalance = stod(vTransferLogLine[4]);
+		TransferLogRecord.User = vTransferLogLine[5];
+	}
+
+	string _TransferLogToLine(clsBankClient ToClient, double Amount, string Seperator = "#//#")
+	{
+		string TransferRecord = "";
+		TransferRecord += clsDate::GetSystemDateTimeString() + Seperator;
+		TransferRecord += AccountNumber() + Seperator;
+		TransferRecord += ToClient.AccountNumber() + Seperator;
+		TransferRecord += to_string(Amount) + Seperator;
+		TransferRecord += to_string(AccountBalance) + Seperator;
+		TransferRecord += to_string(ToClient.AccountBalance) + Seperator;
+		TransferRecord += CurrentUser.UserName;
+		return TransferRecord;
+	}
+
+	static void _AddDataLineToFile(string DataLine, string File)
 	{
 		fstream MyFile;
 		MyFile.open(File, ios::app);
@@ -60,7 +99,7 @@ class clsBankClient : public clsPerson
 	void _UpdateFileData(vector<clsBankClient>& vClients)
 	{
 		fstream Myfile;
-		Myfile.open(File, ios::out);
+		Myfile.open(ClientsFile, ios::out);
 		if (Myfile.is_open())
 		{
 			for (auto& C : vClients)
@@ -90,8 +129,10 @@ class clsBankClient : public clsPerson
 
 	void _AddNew()
 	{
-		_AddDataLineToFile(_ClientToLine(*this));
+		_AddDataLineToFile(_ClientToLine(*this), ClientsFile);
 	}
+
+
 
 public:
 	clsBankClient(enMode Mode, string FirstName, string LastName, string Email, string Phone, string AccountNumber, string PinCode, double balance)
@@ -137,7 +178,7 @@ public:
 	{
 		vector<clsBankClient> vAllClients;
 		fstream MyFile;
-		MyFile.open(File, ios::in);
+		MyFile.open(ClientsFile, ios::in);
 		if (MyFile.is_open())
 		{
 			string line = "";
@@ -153,7 +194,7 @@ public:
 	static clsBankClient Find(string AccountNumber)
 	{
 		fstream Myfile;
-		Myfile.open(File, ios::in);
+		Myfile.open(ClientsFile, ios::in);
 		if (Myfile.is_open())
 		{
 			string line = "";
@@ -174,7 +215,7 @@ public:
 	static clsBankClient Find(string AccountNumber, string PinCode)
 	{
 		fstream Myfile;
-		Myfile.open(File, ios::in);
+		Myfile.open(ClientsFile, ios::in);
 		if (Myfile.is_open())
 		{
 			string line = "";
@@ -268,7 +309,13 @@ public:
 		if (!Withdraw(Amount))
 			return false;
 		ToClient.Deposit(Amount);
+		AddTransferLog(ToClient, Amount);
 		return true;
+	}
+
+	void AddTransferLog(clsBankClient ToClient, double Amount)
+	{
+		_AddDataLineToFile(_TransferLogToLine(ToClient, Amount), TransferFile);
 	}
 };
 
