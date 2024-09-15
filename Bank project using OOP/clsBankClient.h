@@ -132,7 +132,10 @@ class clsBankClient : public clsPerson
 		_AddDataLineToFile(_ClientToLine(*this), ClientsFile);
 	}
 
-
+	void _RegisterTransferLog(clsBankClient ToClient, double Amount)
+	{
+		_AddDataLineToFile(_TransferLogToLine(ToClient, Amount), TransferFile);
+	}
 
 public:
 	clsBankClient(enMode Mode, string FirstName, string LastName, string Email, string Phone, string AccountNumber, string PinCode, double balance)
@@ -309,13 +312,9 @@ public:
 		if (!Withdraw(Amount))
 			return false;
 		ToClient.Deposit(Amount);
-		AddTransferLog(ToClient, Amount);
+		_RegisterTransferLog(ToClient, Amount);
 		return true;
 	}
 
-	void AddTransferLog(clsBankClient ToClient, double Amount)
-	{
-		_AddDataLineToFile(_TransferLogToLine(ToClient, Amount), TransferFile);
-	}
 };
 
