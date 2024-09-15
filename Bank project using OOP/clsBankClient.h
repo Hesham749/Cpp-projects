@@ -48,17 +48,7 @@ class clsBankClient : public clsPerson
 		return ClientRecord;
 	}
 
-	struct stTransferLogRecord
-	{
-		string DateTime,
-			FromClient,
-			ToClient;
-		double Amount,
-			FromBalance,
-			ToBalance;
-		string User;
-	};
-
+	struct stTransferLogRecord;
 	static stTransferLogRecord _LineToTransferRecord(string Line, string Seperator = "#//#")
 	{
 		stTransferLogRecord TransferLogRecord;
@@ -67,9 +57,10 @@ class clsBankClient : public clsPerson
 		TransferLogRecord.FromClient = vTransferLogLine[1];
 		TransferLogRecord.ToClient = vTransferLogLine[2];
 		TransferLogRecord.Amount = stod(vTransferLogLine[3]);
-		TransferLogRecord.FromBalance = stod(vTransferLogLine[3]);
-		TransferLogRecord.ToBalance = stod(vTransferLogLine[4]);
-		TransferLogRecord.User = vTransferLogLine[5];
+		TransferLogRecord.FromBalance = stod(vTransferLogLine[4]);
+		TransferLogRecord.ToBalance = stod(vTransferLogLine[5]);
+		TransferLogRecord.User = vTransferLogLine[6];
+		return TransferLogRecord;
 	}
 
 	string _TransferLogToLine(clsBankClient ToClient, double Amount, string Seperator = "#//#")
@@ -246,6 +237,17 @@ public:
 		svSucceeded, svFaildEmptyObject, svFaildAccountNumberExists
 	};
 
+	struct stTransferLogRecord
+	{
+		string DateTime,
+			FromClient,
+			ToClient;
+		double Amount,
+			FromBalance,
+			ToBalance;
+		string User;
+	};
+
 	enSaveResults Save()
 	{
 		switch (_Mode)
@@ -316,5 +318,21 @@ public:
 		return true;
 	}
 
+	static vector <stTransferLogRecord> GetTransferLogsList(string Seperator = "#//#")
+	{
+		vector<stTransferLogRecord> vTransferLogs;
+		fstream MyFile;
+		MyFile.open(TransferFile, ios::in);
+		if (MyFile.is_open())
+		{
+			string line = "";
+			while (getline(MyFile, line))
+			{
+				vTransferLogs.push_back(_LineToTransferRecord(line));
+			}
+			MyFile.close();
+		}
+		return vTransferLogs;
+	}
 };
 

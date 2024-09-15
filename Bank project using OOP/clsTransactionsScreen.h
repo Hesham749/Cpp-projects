@@ -8,18 +8,18 @@
 #include "clsWithdrawScreen.h"
 #include "clsTotalBalancesScreen.h"
 #include "clsTransferScreen.h"
-
+#include "clsTransferLogScreen.h"
 class clsTransactionsScreen :protected clsScreen
 {
 	enum enTransactionMenuOptions
 	{
-		Deposit = 1, WithDraw, TotalBalance, Transfer, MainMenu
+		Deposit = 1, WithDraw, TotalBalance, Transfer, TransferLog, MainMenu
 	};
 
 	static short _ReadTransactionsMenuOption()
 	{
-		cout << "Choose what do you want to do? [1 to 5]? ";
-		return clsInputValidate::ReadShortNumberBetween(1, 5, "Enter Number between 1 to 5? ");
+		cout << "Choose what do you want to do? [1 to 6]? ";
+		return clsInputValidate::ReadShortNumberBetween(1, 5, "Enter Number between 1 to 6? ");
 	}
 
 	static  void _GoBackToTransactionsMenu()
@@ -66,7 +66,11 @@ class clsTransactionsScreen :protected clsScreen
 		case enTransactionMenuOptions::Transfer:
 			_ShowTransferScreen();
 			break;
+		case enTransactionMenuOptions::TransferLog:
+			clsTransferLogScreen::ShowTransferLogScreen();
+			break;
 		}
+
 		if (TransactionsMenuOption != MainMenu)
 			_GoBackToTransactionsMenu();
 	}
@@ -83,7 +87,8 @@ public:
 		cout << "\t[2] Withdraw.\n";
 		cout << "\t[3] Total Balances.\n";
 		cout << "\t[4] Transfer.\n";
-		cout << "\t[5] Main Menu.\n";
+		cout << "\t[5] Transfer Log.\n";
+		cout << "\t[6] Main Menu.\n";
 		cout << "======================================================\n";
 		_PerfromTransactionsMenuOption((enTransactionMenuOptions)_ReadTransactionsMenuOption());
 	}
