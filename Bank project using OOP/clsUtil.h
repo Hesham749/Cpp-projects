@@ -236,22 +236,24 @@ public:
 		return tab;
 	}
 
-	static void Encryption(string& text, short encryptionKey)
+	static string EncryptText(string text, short encryptionKey = 2)
 	{
 		for (int i = 0; i < (int)text.length(); i++)
 		{
 
 			text[i] = (char)((int)text[i]) + encryptionKey;
 		}
+		return text;
 	}
 
-	static void Decryption(string& text, short encryptionKey)
+	static string DecryptText(string text, short encryptionKey = 2)
 	{
 		for (int i = 0; i < (int)text.length(); i++)
 		{
 
 			text[i] = (char)((int)text[i]) - encryptionKey;
 		}
+		return text;
 	}
 
 	static string NumberToText(int number)

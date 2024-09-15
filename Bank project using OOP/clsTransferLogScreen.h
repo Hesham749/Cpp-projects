@@ -50,7 +50,7 @@ public:
 			cout << "\t\tNo Transfers Available In the System!";
 		else
 
-			for (clsBankClient::stTransferLogRecord Record : vTransferLogRecord)
+			for (clsBankClient::stTransferLogRecord& Record : vTransferLogRecord)
 			{
 
 				PrintTransferLogRecordLine(Record);

@@ -19,7 +19,7 @@ class clsTransactionsScreen :protected clsScreen
 	static short _ReadTransactionsMenuOption()
 	{
 		cout << "Choose what do you want to do? [1 to 6]? ";
-		return clsInputValidate::ReadShortNumberBetween(1, 5, "Enter Number between 1 to 6? ");
+		return clsInputValidate::ReadShortNumberBetween(1, 6, "Enter Number between 1 to 6? ");
 	}
 
 	static  void _GoBackToTransactionsMenu()

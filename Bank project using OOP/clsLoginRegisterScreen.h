@@ -41,7 +41,7 @@ public:
             cout << "\t\t\t\tNo Logins Available In the System!";
         else
 
-            for (clsUser::stLoginRegisterRecord Record : vLoginRegisterRecord)
+            for (clsUser::stLoginRegisterRecord& Record : vLoginRegisterRecord)
             {
 
                 PrintLoginRegisterRecordLine(Record);

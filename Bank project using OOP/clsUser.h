@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <vector>
+#include "clsUtil.h"
 
 const string UsersFile = "Users.txt";
 const string RegisterFile = "LoginRegister.txt";
@@ -23,7 +24,7 @@ class clsUser :public clsPerson
 	static clsUser _LineToUser(string Line, string Seperator = "#//#")
 	{
 		vector <string> vUser = clsString::Split(Line, Seperator);
-		return clsUser(enMode::UpdatMode, vUser[0], vUser[1], vUser[2], vUser[3], vUser[4], vUser[5], stod(vUser[6]));
+		return clsUser(enMode::UpdatMode, vUser[0], vUser[1], vUser[2], vUser[3], vUser[4], clsUtil::DecryptText(vUser[5]), stod(vUser[6]));
 	}
 
 	static clsUser _EmptyUser()
@@ -34,12 +35,13 @@ class clsUser :public clsPerson
 	static string _UserToLine(clsUser User, string Seperator = "#//#")
 	{
 		string UserRecord = "";
+
 		UserRecord += User.FirstName + Seperator;
 		UserRecord += User.LastName + Seperator;
 		UserRecord += User.Email + Seperator;
 		UserRecord += User.Phone + Seperator;
 		UserRecord += User.UserName + Seperator;
-		UserRecord += User.Password + Seperator;
+		UserRecord += clsUtil::EncryptText(User.Password) + Seperator;
 		UserRecord += to_string(User.Permissions);
 		return UserRecord;
 	}
@@ -96,20 +98,20 @@ class clsUser :public clsPerson
 		string UserRecord = "";
 		UserRecord += clsDate::GetSystemDateTimeString() + Seperator;
 		UserRecord += _UserName + Seperator;
-		UserRecord += _Password + Seperator;
+		UserRecord += clsUtil::EncryptText(_Password) + Seperator;
 		UserRecord += to_string(_Permissions);
 		return UserRecord;
 	}
 
 	struct stLoginRegisterRecord;
-	 static stLoginRegisterRecord _LineToLoginRecord(string Line, string Seperator = "#//#")
+	static stLoginRegisterRecord _LineToLoginRecord(string Line, string Seperator = "#//#")
 	{
 		stLoginRegisterRecord LoginRegisterRecord;
 
 		vector <string> LoginRegisterDataLine = clsString::Split(Line, Seperator);
 		LoginRegisterRecord.DateTime = LoginRegisterDataLine[0];
 		LoginRegisterRecord.UserName = LoginRegisterDataLine[1];
-		LoginRegisterRecord.Password = LoginRegisterDataLine[2];
+		LoginRegisterRecord.Password = clsUtil::DecryptText(LoginRegisterDataLine[2]);
 		LoginRegisterRecord.Permissions = stoi(LoginRegisterDataLine[3]);
 
 		return LoginRegisterRecord;
