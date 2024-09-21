@@ -1,9 +1,9 @@
 #pragma once
 #include <iostream>
 #include "clsScreen.h"
-#include "clsCurrency.h"
 #include "clsInputValidate.h"
 #include "clsUtil.h"
+#include "clsCurrenciesListScreen.h"
 class clsCurrenyExchangeMainScreen :protected clsScreen
 {
 
@@ -43,7 +43,7 @@ class clsCurrenyExchangeMainScreen :protected clsScreen
 
 	static void _ShowListCurrenciesScreen()
 	{
-		cout << "list currencies" << endl;
+		clsCurrenciesListScreen::ShowCurrenciesListScreen();
 	}
 
 	static void _ShowFindCurrencyScreen()
