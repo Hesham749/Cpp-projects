@@ -66,16 +66,16 @@ class clsCurrenyExchangeMainScreen :protected clsScreen
 		system("cls");
 		switch (CurrencyExchangeMenuOption)
 		{
-		case clsCurrenyExchangeMainScreen::eListCurrencies:
+		case _enCurrencyExchangeMenu::eListCurrencies:
 			_ShowListCurrenciesScreen();
 			break;
-		case clsCurrenyExchangeMainScreen::eFindCurrency:
+		case _enCurrencyExchangeMenu::eFindCurrency:
 			_ShowFindCurrencyScreen();
 			break;
-		case clsCurrenyExchangeMainScreen::eUpdateRate:
+		case _enCurrencyExchangeMenu::eUpdateRate:
 			_ShowUpdateRateScreen();
 			break;
-		case clsCurrenyExchangeMainScreen::eCurrencyCalculator:
+		case _enCurrencyExchangeMenu::eCurrencyCalculator:
 			_ShowCurrencyCalculatorScreen();
 			break;
 		}
