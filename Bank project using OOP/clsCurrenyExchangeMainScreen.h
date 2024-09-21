@@ -4,6 +4,7 @@
 #include "clsInputValidate.h"
 #include "clsUtil.h"
 #include "clsCurrenciesListScreen.h"
+#include "clsFindCurrencyScreen.h"
 class clsCurrenyExchangeMainScreen :protected clsScreen
 {
 
@@ -48,7 +49,7 @@ class clsCurrenyExchangeMainScreen :protected clsScreen
 
 	static void _ShowFindCurrencyScreen()
 	{
-		cout << "Find Currency" << endl;
+		clsFindCurrencyScreen::ShowFindCurrencyScreen();
 	}
 
 	static void _ShowUpdateRateScreen()
