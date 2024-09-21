@@ -10,6 +10,7 @@
 #include "clsTransactionsScreen.h"
 #include "clsManageUsersScreen.h"
 #include "Global.h"
+#include "clsCurrenyExchangeMainScreen.h"
 using namespace std;
 
 class clsMainScreen : protected clsScreen
@@ -18,13 +19,13 @@ private:
 	enum enMainMenuOptions {
 		eListClients = 1, eAddNewClient, eDeleteClient,
 		eUpdateClient, eFindClient, eShowTransactionsMenu,
-		eManageUsers, eLoginRegisterScreen, eExit
+		eManageUsers, eCurrencyExchange, eExit
 	};
 
 	static short _ReadMainMenuOption()
 	{
-		cout << "Choose what do you want to do? [1 to 8]? ";
-		return clsInputValidate::ReadShortNumberBetween(1, 8, "Enter Number between 1 to 8? ");
+		cout << "Choose what do you want to do? [1 to 9]? ";
+		return clsInputValidate::ReadShortNumberBetween(1, 9, "Enter Number between 1 to 9? ");
 	}
 
 	static  void _GoBackToMainMenu()
@@ -68,9 +69,9 @@ private:
 		clsManageUsersScreen::ShowMangeUsersMenu();
 	}
 
-	static void _showLoginRegisterScreen()
+	static void _ShowCurrencyExchangeMenu()
 	{
-
+		clsCurrenyExchangeMainScreen::ShowCurrencyExchangeMainScreen();
 	}
 
 	static void _Logout()
@@ -92,7 +93,8 @@ private:
 		cout << "\t[5] Find Client.\n";
 		cout << "\t[6] Transactions.\n";
 		cout << "\t[7] Manage Users.\n";
-		cout << "\t[8] Logout.\n";
+		cout << "\t[8] Currency Exchange.\n";
+		cout << "\t[9] Logout.\n";
 		cout << "======================================================\n";
 	}
 
@@ -136,12 +138,13 @@ private:
 			(clsScreen::HasPermission(clsUser::MangeUsersAccess)) ?
 				_ShowManageUsersMenu() : _GoBackToMainMenu();
 			break;
-
+		case enMainMenuOptions::eCurrencyExchange:
+			_ShowCurrencyExchangeMenu();
 		case enMainMenuOptions::eExit:
 			_Logout();
 			break;
 		}
-		if (MainMenuOption != eExit && MainMenuOption != eManageUsers && MainMenuOption != eShowTransactionsMenu)
+		if (MainMenuOption != eExit && MainMenuOption != eManageUsers && MainMenuOption != eShowTransactionsMenu && MainMenuOption != eCurrencyExchange)
 			_GoBackToMainMenu();
 	}
 public:

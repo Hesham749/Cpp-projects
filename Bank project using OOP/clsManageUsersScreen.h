@@ -22,7 +22,7 @@ class clsManageUsersScreen :protected clsScreen
 		return Choice;
 	}
 
-	static void _GoBackToManageUsersMenue()
+	static void _GoBackToManageUsersMenu()
 	{
 		cout << "\n\nPress any key to go back to Manage Users Menu...";
 		system("pause>0");
@@ -120,7 +120,7 @@ class clsManageUsersScreen :protected clsScreen
 		}
 
 		if (ManageUsersMenueOption != enManageUsersMenuOptions::eMainMenu)
-			_GoBackToManageUsersMenue();
+			_GoBackToManageUsersMenu();
 	}
 
 
@@ -128,12 +128,12 @@ public:
 
 	static void ShowMangeUsersMenu()
 	{
-		enManageUsersMenuOptions ManageUsersMenueOption;
+		enManageUsersMenuOptions ManageUsersMenuOption;
 		do
 		{
 			_ManageUserMenu();
-			_PerformManageUsersMenuOption(ManageUsersMenueOption = (enManageUsersMenuOptions)_ReadManageUsersMenuOption());
-		} while (ManageUsersMenueOption != eMainMenu);
+			_PerformManageUsersMenuOption(ManageUsersMenuOption = (enManageUsersMenuOptions)_ReadManageUsersMenuOption());
+		} while (ManageUsersMenuOption != eMainMenu);
 	}
 };
 
