@@ -51,6 +51,6 @@ public:
 		printf("Find By : [1] Code or [2] Country ? ");
 		clsCurrency Currency = _PerformFindByOption((_enFindBy)clsInputValidate::ReadShortNumberBetween(1, 2));
 		_ShowResult(Currency);
-	}
+	}               
 };
 
