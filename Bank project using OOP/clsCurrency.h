@@ -139,5 +139,11 @@ public:
 		return FindByCode(CurrencyCode).IsEmpty();
 	}
 
+	float CurrencyExchangeTo(clsCurrency ToCurrency, float Amount)
+	{
+		if (ToCurrency._CurrencyCode == "USD")
+			return (float)Amount / _Rate;
+		return (float) (Amount / _Rate) * ToCurrency._Rate;
+	}
 };
 
