@@ -29,6 +29,19 @@ class clsCurrencyCalculatorScreen : protected clsScreen
 		return Currency;
 	}
 
+	static void _PrintCalculationResult(float Amount, clsCurrency FromCurrency, clsCurrency ToCurrency)
+	{
+		printf("\nConvert From : ");
+		_PrintCurrencyCard(FromCurrency);
+		if (ToCurrency.CurrencyCode() != "USD")
+		{
+			printf("\nTo : ");
+			_PrintCurrencyCard(ToCurrency);
+		}
+		cout << Amount << " " << FromCurrency.CurrencyCode() << " = " << FromCurrency.CurrencyExchangeTo(ToCurrency, Amount);
+		cout << " " << ToCurrency.CurrencyCode() << endl;
+	}
+
 public:
 	static void ShowCurrencyCalculatorScreen()
 	{
@@ -40,15 +53,7 @@ public:
 			clsCurrency Currency2 = _ReadCurrency("\nPlease Enter Currency Code2 : ");
 			printf("\nEnter Amount to Exchange : ");
 			float Amount = clsInputValidate::ReadFloatNumber();
-			printf("\nConvert From : ");
-			_PrintCurrencyCard(Currency1);
-			if (Currency2.CurrencyCode() != "USD")
-			{
-				printf("\nTo : ");
-				_PrintCurrencyCard(Currency2);
-			}
-			cout << Amount << " " << Currency1.CurrencyCode() << " = " << Currency1.CurrencyExchangeTo(Currency2, Amount);
-			cout << " " << Currency2.CurrencyCode() << endl;
+			_PrintCalculationResult(Amount, Currency1, Currency2);
 		} while (clsUtil::ConfirmAction("\nDo You Want to Perform Another Calculation ? y/n ? "));
 
 	}
