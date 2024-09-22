@@ -50,9 +50,11 @@ class clsCurrency
 		vector <clsCurrency> vAllCurrencies = GetAllCurrencies();
 		for (auto& C : vAllCurrencies)
 		{
-			if (C.CurrencyCode() == CurrencyCode())
-				C = *this;
-			break;
+			if (C._CurrencyCode == _CurrencyCode)
+			{
+				C._Rate = _Rate;
+				break;
+			}
 		}
 		_DataToFile(vAllCurrencies);
 	}

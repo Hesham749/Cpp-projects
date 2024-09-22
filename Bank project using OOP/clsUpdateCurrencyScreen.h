@@ -39,7 +39,6 @@ public:
 			printf("\nCurrency Rate Updated Successfully :-)");
 			_PrintCurrencyCard(Currency);
 		}
-
 	}
 };
 
