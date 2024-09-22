@@ -39,7 +39,7 @@ class clsCurrency
 		{
 			for (auto& C : Currencies)
 			{
-				Myfile << _CurrencyToLine(C);
+				Myfile << _CurrencyToLine(C) << endl;
 			}
 			Myfile.close();
 		}
@@ -50,8 +50,8 @@ class clsCurrency
 		vector <clsCurrency> vAllCurrencies = GetAllCurrencies();
 		for (auto& C : vAllCurrencies)
 		{
-			if (C.CurrencyCode() == _CurrencyCode)
-				C.UpdateRate(_Rate);
+			if (C.CurrencyCode() == CurrencyCode())
+				C = *this;
 			break;
 		}
 		_DataToFile(vAllCurrencies);
@@ -85,6 +85,7 @@ public:
 	void UpdateRate(float NewRate)
 	{
 		_Rate = NewRate;
+		_Update();
 	}
 
 	bool IsEmpty()
