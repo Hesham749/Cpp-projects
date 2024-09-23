@@ -41,7 +41,7 @@ class clsUpdateClientScreen :protected clsScreen
 		Client.PinCode = clsInputValidate::ReadString();
 
 		cout << "\nEnter Account Balance: ";
-		Client.AccountBalance = clsInputValidate::ReadDblNumber();
+		Client.AccountBalance = clsInputValidate::ReadNumber <double>();
 	}
 
 public:
@@ -49,7 +49,7 @@ public:
 	static void ShowUpdateClientScreen()
 	{
 
-		_ScreenHeader("Update Client Screen",2);
+		_ScreenHeader("Update Client Screen", 2);
 
 		string AccountNumber = "";
 

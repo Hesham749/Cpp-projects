@@ -52,7 +52,7 @@ public:
 			clsCurrency Currency1 = _ReadCurrency("\nPlease Enter Currency Code1 : ");
 			clsCurrency Currency2 = _ReadCurrency("\nPlease Enter Currency Code2 : ");
 			printf("\nEnter Amount to Exchange : ");
-			float Amount = clsInputValidate::ReadFloatNumber();
+			float Amount = clsInputValidate::ReadNumber <float>();
 			_PrintCalculationResult(Amount, Currency1, Currency2);
 		} while (clsUtil::ConfirmAction("\nDo You Want to Perform Another Calculation ? y/n ? "));
 

@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Core">
+      <UniqueIdentifier>{27253d7a-4919-4d29-87d1-209ee02d0ca7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Lib">
+      <UniqueIdentifier>{dd9b9337-e1d1-4697-9a0b-6d2407e3161e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Bank project using OOP.cpp">
@@ -20,24 +26,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="clsBankClient.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="clsInputValidate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="clsPerson.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="clsString.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="clsDate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="clsUtil.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="clsMainScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -83,9 +71,6 @@
     <ClInclude Include="clsManageUsersScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="clsUser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="clsUpdateUserScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -107,9 +92,6 @@
     <ClInclude Include="clsCurrenciesListScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="clsCurrency.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="clsCurrenyExchangeMainScreen.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -124,6 +106,30 @@
     </ClInclude>
     <ClInclude Include="clsCurrencyCalculatorScreen.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="clsUtil.h">
+      <Filter>Header Files\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="clsString.h">
+      <Filter>Header Files\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="clsDate.h">
+      <Filter>Header Files\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="clsInputValidate.h">
+      <Filter>Header Files\Lib</Filter>
+    </ClInclude>
+    <ClInclude Include="clsUser.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="clsCurrency.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="clsBankClient.h">
+      <Filter>Header Files\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="clsPerson.h">
+      <Filter>Header Files\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

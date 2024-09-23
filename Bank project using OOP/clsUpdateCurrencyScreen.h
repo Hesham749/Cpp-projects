@@ -35,7 +35,7 @@ public:
 		{
 			printf("\nUpdate Currency Rate : \n________________________________________________");
 			printf("\n\nEnter new Rate : ");
-			Currency.UpdateRate(clsInputValidate::ReadFloatNumber());
+			Currency.UpdateRate(clsInputValidate::ReadNumber <float>());
 			printf("\nCurrency Rate Updated Successfully :-)");
 			_PrintCurrencyCard(Currency);
 		}

@@ -36,7 +36,7 @@ public:
 
 		double Amount = 0;
 		cout << "\nPlease enter Transfer amount? ";
-		while (FromClient.AccountBalance < (Amount = clsInputValidate::ReadDblNumber()))
+		while (FromClient.AccountBalance < (Amount = clsInputValidate::ReadNumber <double>()))
 		{
 			cout << "\nAmount Exceeded the Available Balance, Enter another amount ? ";
 		}
