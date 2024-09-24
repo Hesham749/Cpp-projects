@@ -36,24 +36,9 @@ public:
 		return !clsDate::IsDate1BeforeDate2(Date, StartDate) && !clsDate::IsDate1AfterDate2(Date, EndDate);
 	}
 
-	static int ReadIntNumber(string ErrorMessage = "Invalid Number, Enter again:\n")
+	template <typename T> static T ReadNumber(string ErrorMessage = "Invalid Number, Enter again:\n")
 	{
-		return (int)ReadDblNumber(ErrorMessage);
-	}
-
-	static float ReadFloatNumber(string ErrorMessage = "Invalid Number, Enter again:\n")
-	{
-		return (float)ReadDblNumber(ErrorMessage);
-	}
-
-	static short ReadShortNumber(string ErrorMessage = "Invalid Number, Enter again:\n")
-	{
-		return (short)ReadDblNumber(ErrorMessage);
-	}
-
-	static double ReadDblNumber(string ErrorMessage = "Invalid Number, Enter again:\n")
-	{
-		double Num = 0;
+		T Num = 0;
 		while (!(cin >> Num))
 		{
 			cin.clear();
@@ -77,7 +62,7 @@ public:
 	static double ReadDblNumberBetween(double from, double to, string ErrorMessage = "Number is not within range, enter again:\n")
 	{
 		double Num;
-		while (!IsNumberBetween(Num = ReadDblNumber(), from, to))
+		while (!IsNumberBetween(Num = ReadNumber <double>(), from, to))
 		{
 			cout << ErrorMessage;
 		}
