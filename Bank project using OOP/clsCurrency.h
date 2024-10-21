@@ -146,4 +146,3 @@ public:
 		return (float) (Amount / _Rate) * ToCurrency._Rate;
 	}
 };
-
